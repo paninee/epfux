@@ -1,0 +1,105 @@
+<div class="booking-list">
+  <div class="flex-header">
+      <div class="flex">
+          <h5 class="page-title">Bookings</h5>
+      </div>
+      <div class="flex">
+        <button type="button" class="btn btn-save" routerLink="/bookings/create">Create new booking</button>
+      </div>
+</div>
+
+  <div class="flex-content">
+    <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+       <ul class="list-group">
+
+        <li class="list-group-item">
+          <div class="inner-addon left-addon">
+              <i class="fa fa-search"></i>
+              <input type="text" class="form-control" id="search" placeholder="Search..." [(ngModel)]="search" (ngModelChange)="findKeyword(search)">
+          </div>
+        </li>
+
+        <li class="list-group-item title-list">
+          <div class="list-group-flex-7 text-left"><p>Contract #</p></div>
+          <div class="list-group-flex-8 text-left"><p>Client</p></div>
+          <div class="list-group-flex-8 text-left"><p>Deceased</p></div>
+          <div class="list-group-flex-6 text-left"><p>Service date</p></div>
+          <div class="list-group-flex-7 text-left"><p>Invoice status</p></div>
+          <div class="list-group-flex-6 text-right"><p>Invoice total</p></div> 
+        </li>
+
+        <li class="list-group-item" 
+          *ngFor="let booking of ( bookingList | paginate: { id: 'server', itemsPerPage: limit, currentPage: p, totalItems : bookingTotal }) as booking"
+          (click)="viewEditBooking(booking)"
+          >
+          <div class="list-group-flex-7 text-left">
+            <p class="text-decoration">{{booking.contractNo}}</p>
+          </div>
+          <div class="list-group-flex-8 text-left">
+            <p>{{booking.clientName}} {{booking.clientFamilyName}}</p>
+          </div>
+          <div class="list-group-flex-8 text-left">
+            <p>{{booking.deceasedName}} {{booking.deceasedFamilyName}}</p>
+          </div>
+          <div class="list-group-flex-6 text-left">
+            <p>{{booking.serviceStart | date:'mediumDate' }}</p>
+          </div>
+          <div class="list-group-flex-7 text-left">
+            <p class="invoice-status-paid" *ngIf="booking.invoiceStatus=='paid'">
+              <span class="status-dot"><i class="fa fa-circle fa-1"></i></span>
+              <span>{{booking.invoiceStatus.charAt(0).toUpperCase() + booking.invoiceStatus.slice(1)}}</span>
+            </p>
+            <p class="invoice-status-waiting" *ngIf="booking.invoiceStatus=='waiting payment'">
+              <span class="status-dot"><i class="fa fa-circle fa-1"></i></span>
+              <span>{{booking.invoiceStatus.charAt(0).toUpperCase() + booking.invoiceStatus.slice(1)}}</span>
+            </p>
+            <p class="invoice-status-inquiry" *ngIf="booking.invoiceStatus=='inquiry'">
+                <span class="status-dot"><i class="fa fa-circle fa-1"></i></span>
+                <span>{{booking.invoiceStatus.charAt(0).toUpperCase() + booking.invoiceStatus.slice(1)}}</span>
+            </p>
+            <p class="invoice-status-partial" *ngIf="booking.invoiceStatus=='partially paid'">
+              <span class="status-dot"><i class="fa fa-circle fa-1"></i></span>
+              <span>{{booking.invoiceStatus.charAt(0).toUpperCase() + booking.invoiceStatus.slice(1)}}</span>
+            </p>
+          </div>
+          <div class="list-group-flex-6 text-right">
+            <p>${{booking ? formatNumber(booking.total) : ''}}</p>
+          </div>
+        </li>
+
+        <li class="list-group-item" *ngIf="(bookingList).length < 1">
+          <p>Not Data found</p>
+        </li>
+
+        <li class="list-group-item pagination-item">
+          <div [ngClass]="isLoading ? 'hidden-box' : ''">
+            <small>Showing {{ (bookingList).length }} of {{ bookingTotal }}</small>
+          </div>
+            <div>
+                <pagination-controls 
+                    (pageChange)="getPage($event)"
+                    id="server" 
+                    previousLabel=""
+                    nextLabel="">
+                </pagination-controls>
+            </div>
+          </li>
+      </ul>
+  </div>
+
+  <div class="flex-content">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div class="text-left vertically-center">
+              <p>Export your booking as a CSV (comma seperated values) table.</p>
+            </div>
+            <div class="text-left vertically-center">
+              <a class="btn btn-cancel-bg" href="/api/v1/bookings/export/csv" download>
+                Export</a>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+
+<notifier-container></notifier-container>

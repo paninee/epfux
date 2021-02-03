@@ -1,0 +1,115 @@
+@import 'styles/lib';
+@import 'styles/ng-busy';
+@import 'styles/app.less';
+@import '~uppy/dist/uppy.css';
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+body, html {
+  height: 100%;
+  font-size:14px;
+}
+
+body {
+  font-family: @main-font;
+  background-position: center;
+  background-image: url(./assets/images/page-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+a {
+  color: @main-button-color;
+
+  &hover {
+    color: @main-button-color;
+  }
+}
+
+.main-button {
+  background-color: @main-button-color !important;
+  border-color: @main-button-color !important;
+}
+
+.faded-text {
+  color: @faded-color !important;
+}
+
+.form-group {
+  .ng-invalid.ng-dirty {
+    border: 1px solid @invalid-color;
+    box-shadow: 0px 1px @invalid-color;
+  }
+}
+
+.text-danger {
+  color: @invalid-color !important;
+}
+
+.home-logo {
+  text-align: center;
+  margin: 3em 0;
+  img {
+    width: 10%;
+  }
+}
+
+//override boostrap styles
+
+.fc-event-container{
+  cursor: pointer !important;
+  .fc-content{
+    color:#fff;
+  }
+}
+
+.btn-link{
+  color: @main-button-color;
+  &:hover{
+    color: @main-button-color;
+  }
+}
+.btn-light{
+  border-color: @main-button-color !important;
+}
+.ngb-dp-weekday{
+  color: @main-button-color !important;
+  font-style: normal !important;
+}
+
+.bg-primary{
+  background: rgba(186,76,59,0.52) !important;
+}
+
+.modal-content{
+  button:focus{
+    outline: none !important;
+  }
+}
+
+.uppy-Dashboard-inner{
+  min-height: 160px !important;
+  min-width: 160px !important;
+  border: 2px dashed #eaeaea !important;
+  background: #F4F6F8 !important;
+  margin: 0 auto;
+  .uppy-DashboardAddFiles-info{
+    a{
+      display: none;
+    }
+  }
+  .uppy-Dashboard-dropFilesTitle{
+    .uppy-Dashboard-browse{
+      .change-photo-btn(0px,100%,center);
+      &:hover,&:focus{
+        border-bottom: none !important;
+      }
+    }
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+}

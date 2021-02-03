@@ -1,0 +1,157 @@
+<div class="services-list">
+    <div class="flex-header">
+      <div class="flex">
+          <h5 class="page-title">Services</h5>
+      </div>
+      <div class="flex">
+        <button class="btn btn-save" (click)="addServiceModal(content)">Create new service</button>
+      </div>
+  </div>
+
+    <div class="flex-content">
+        <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+          <ul class="list-group">
+              <li class="list-group-item">
+                  <div class="inner-addon left-addon">
+                      <i class="fa fa-search"></i>
+                      <input type="text" class="form-control" id="search" placeholder="Search..." [(ngModel)]="search" (ngModelChange)="findKeyword(search)">
+                  </div>  
+              </li>
+              <li class="list-group-item">
+                  <div class="list-group-flex-1"><p>Service</p></div>
+                  <div class="list-group-flex-2"><p>Category</p></div>
+                  <div class="list-group-flex-2 text-left"><p>Primary Vendor</p></div>
+                  <div class="list-group-flex-2 text-right"><p>Set price</p></div>
+              </li>
+
+              <li class="list-group-item" *ngFor="let service of ( servicesList | paginate: { id: 'server', itemsPerPage: limit, currentPage: p, totalItems : servicesTotal }) as service">
+                <div class="list-group-flex-1"><p class="service-title">{{ service ? service.name : '-' }}</p></div>
+                <div class="list-group-flex-2"><p>{{ service ? service.category.name : '-' }}</p></div>
+                <div class="list-group-flex-2 text-left">
+                  <p>{{ service.vendor ? service.vendor.contactName : '-' }} {{ service.vendor ? service.vendor.name : '' }}</p>
+                </div>
+                <div class="list-group-flex-2 text-right"><p>$ {{ service ? formatNumber(service.price) : '-' }}</p></div>
+                </li>
+
+              <li class="list-group-item" *ngIf="(servicesList).length < 1">
+                <p>
+                    Not Data found
+                </p>
+              </li>
+              <li class="list-group-item pagination-item">
+                <div [ngClass]="isLoading ? 'hidden-box' : ''">
+                    <small>Showing {{ (servicesList).length }} of {{ servicesTotal }}</small>
+                </div>
+                <div>
+                    <pagination-controls 
+                        (pageChange)="getPage($event)"
+                        id="server" 
+                        previousLabel=""
+                        nextLabel="">
+                    </pagination-controls>
+                </div>
+              </li>
+          </ul>
+    </div>
+</div>
+
+  <ng-template #content let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Create a new service</h5>
+        <button type="button" class="close" aria-label="Close" (click)="exitClick()">
+          <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+        </button>
+      </div>
+      <div class="modal-description">
+          <p>
+            Creating a new service adds it to the Services list. This service can then be selected and added to an invoice. The price can also be edited when creating the invoice.
+          </p>
+        </div>
+        <div class="modal-body">
+    
+            <div class="flex-content">
+                <div class="form-container">
+                  <form [formGroup]="form">
+                      <div class="flex-row">
+                          <div class="contents_8">
+                              <div class="form-group">
+                                  <label for="serviceName">Service name</label>
+                                  <small *ngIf="formErrors.serviceName.message" class="float-right text-danger">{{ formErrors.serviceName.message }}</small>
+                                  <input type="text" class="form-control" id="serviceName" placeholder="Service name" formControlName="serviceName">
+                                </div>
+                          </div>
+                          <div class="contents_8_2 flex-end">
+                              <div class="form-group">
+                                  <label for="price">Price</label>
+                                  <small *ngIf="formErrors.price.message" class="float-right text-danger">{{ formErrors.price.message }}</small>
+                                  <input currencyMask 
+                                  formControlName="price"
+                                  class="form-control" [options]="{prefix: '$'}"
+                                  (click)="moveCursorToEnd($event)"/>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="flex-row">
+                          <div class="contents_1">
+                              <div class="form-group">
+                                  <label for="category">Category</label>
+                                  <small *ngIf="formErrors.category.message" class="float-right text-danger">{{ formErrors.category.message }}</small>
+                                  <ng-select [searchable]="false" [clearable]="false" labelForId="category" formControlName="category">
+                                    <ng-option *ngFor="let i of serviceCategories" value="{{i._id}}">
+                                      {{i.name.charAt(0).toUpperCase() + i.name.slice(1)}}
+                                    </ng-option>
+                                  </ng-select>
+                                </div>
+                          </div>
+                        </div>
+
+                        <div class="flex_row">
+                          <div class="contents_1">
+                              <div class="form-check">
+                                <input type="checkbox" 
+                                  class="form-check-input" 
+                                  id="showVendors"
+                                  [(ngModel)]="showVendors"
+                                  formControlName="showVendors"
+                                  (ngModelChange)="onChangedVendor($event)"
+                                >
+                                <label class="form-check-label" for="showVendors"></label>
+                                <span>Assign a vendor </span>
+                                <span class="hinttext">(optional)</span>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="flex-row vendors-class" *ngIf="showVendors">
+                            <div class="contents_1">
+                                <div class="form-group">
+                                    <label for="vendor">Vendor</label>
+                                    <small *ngIf="formErrors.vendor.message" class="float-right text-danger">{{ formErrors.vendor.message }}</small>
+                                    <ng-select [searchable]="false" [clearable]="false" labelForId="vendor" formControlName="vendor">
+                                      <ng-option *ngFor="let i of vendors" value="{{i._id}}">
+                                        {{i.name.charAt(0).toUpperCase() + i.name.slice(1)}}
+                                      </ng-option>
+                                    </ng-select>
+                                  </div>
+                            </div>
+                          </div>
+                  </form>
+                </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel-bg" (click)="exitClick()">Cancel</button>
+        <button type="button" class="btn btn-save" (click)="prepareFields()">Create service</button>
+      </div>
+  </ng-template>
+
+  <notifier-container></notifier-container>
+
+  <ng-template #customNotification let-notificationData="notification">
+    <div class="notier-container" type="notificationData.type">
+        <span><i class="fa fa-check"></i></span>
+        <p class="notifier__notification-message">{{notificationData.message}}</p>
+        <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+    </div>
+  </ng-template>

@@ -1,0 +1,37 @@
+@import '../../../styles/lib.less';
+.account-list{
+  .flex-header{
+    .flex-header();
+     .flex{
+      display:flex;
+        .page-title{
+          font-size: 1.8rem;
+        }
+     }
+   }
+   .flex-content{
+    .flex-content(100%);
+    .list-group{
+      .list-group();
+      .list-group-item{
+        .list-item();
+        p{
+          width: 33.33%;
+        }
+        &:nth-child(1){
+          padding-top: 20px;
+          padding-bottom: 60px;
+        }
+        &:nth-child(2){
+          p{
+            font-weight: 900;
+            font-size: 1rem;
+          }
+        }
+        small{
+          color:@small-color;
+        }
+      }
+    }
+   }
+}

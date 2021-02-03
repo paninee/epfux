@@ -1,0 +1,107 @@
+@import '../../../styles/lib.less';
+@media print{
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+}
+.booking-invoice {
+  background: #fff;
+  padding: 3%;
+  box-shadow: 0 0 10px #c1c1c1;
+  border-radius: 5px;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: rgb(71,81,92);
+  @media print {
+    width:100vw;
+  }
+  .row{
+    padding-top: 1rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid rgb(237,240,243);
+    .col-md-8{
+      padding-left: 0;
+      padding-right: 0;
+    }
+    &:last-child{
+      border-bottom: 0;
+    }
+    .padd{
+      padding-top: 10px;
+    }
+    .agreement-text{
+      font-size: 13px;
+    }
+    .header{
+      font-weight: 600;
+      font-size: 1.7rem;
+      @media print {
+        font-size:30pt;
+      }
+    }
+    .header-title{
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .agreement-content{
+      padding-bottom: 10px
+    }
+    .header-text{
+      font-weight: 600;
+      &.space-bot{
+        padding-bottom: 0.7rem;
+      }
+      span{
+        font-weight: 400;
+      }
+    }
+    .list-services{
+      padding-bottom: 20px;
+      &.total{
+        padding-bottom: 35px;
+        @media print {
+          padding-top: 20pt;
+        }
+        .list-group-item{
+          background: #F4F5F7;
+          @media print {
+            background: #F4F5F7;
+          }
+        }
+      }
+      .list-group{
+        &.list-group-flush{
+          .sign-border{
+            border-top: 1px solid rgba(0,0,0,.125);
+          }
+        }
+        .list-group-item{
+          display: flex;
+          justify-content: space-between;
+          font-weight: 600;
+          color:rgb(69,79,90);
+          padding:8px;
+          span{
+            font-weight: 400;
+          }
+          &.totalprice{
+            font-size: 1.2rem;
+          }
+        }
+      }
+      &.sign-container{
+        font-size:10px; 
+        ul{
+          li{
+            &:first-child{
+              margin-top: 3rem;
+            }
+            padding-bottom: 3rem !important;
+          }
+        }
+      }
+    }
+  }
+}

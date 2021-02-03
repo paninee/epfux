@@ -1,0 +1,26 @@
+<div class="calendar-container">
+  <div class="app-top">
+    <button type="button" class="btn btn-save" (click)='back()'>Previous</button>
+    <button type="button" class="btn btn-save" (click)='next()'>Next</button>
+  </div>
+
+  <div class="flex-container">
+    <div class="form-container">
+        <full-calendar
+        deepChangeDetection="true"
+        defaultView="dayGridMonth"
+        nextDayThreshold="00:00:00"
+        [header]="{
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }"
+        [plugins]="calendarPlugins"
+        [weekends]="calendarWeekends"
+        [events]="events"
+        (eventClick)="handleDateClick($event)"
+        #calendar
+      ></full-calendar>
+    </div>
+  </div>
+</div>
+
+

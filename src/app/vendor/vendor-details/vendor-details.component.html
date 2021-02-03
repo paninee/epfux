@@ -1,0 +1,50 @@
+<div class="vendor-details">
+
+  <div class="flex-header">
+      <div class="flex">
+          <div class="flex-title">
+              <a routerLink="/vendors">
+                  &lt; Vendors
+              </a>
+          </div>
+          <div class="flex-title">
+              <h5 class="page-title">
+                {{ vendor ? vendor.name : ''}}
+              </h5>
+          </div>
+      </div>
+  </div>
+
+  <div class="flex-content">
+      <div class="content-container">
+         <div class="content-header">
+            <div class="content-header-flex"><h4>Contact and address</h4></div>
+            <div class="content-header-flex">
+                <!-- <a href="javaScript:void(0);">Edit</a> -->
+            </div>
+         </div>
+         <div class="content">
+            <ul class="list-unstyled">
+                <li class="contact-name">{{vendor ? vendor.contactName : ''}}</li>
+                <li><a href="javaScript:void(0);">{{vendor ? vendor.email : ''}}</a></li>
+                <li>{{vendor ? vendor.phoneNo : ''}}</li>
+            </ul>
+         </div>
+         <div class="content">
+            <ul class="list-unstyled">
+                <li>{{vendor.address ? vendor.address.street : ''}}</li>
+                <li>{{vendor.address ? vendor.address.province : ''}} {{vendor.address ? vendor.address.city : ''}} </li>
+                <li>{{vendor.address ? vendor.address.postalCode : ''}}</li>
+                <li>{{vendor.address ? vendor.address.country : ''}}</li>
+            </ul>
+         </div>
+      </div>
+    </div>
+
+    <div class="flex-content">
+        <div class="flex-actions">
+            <button type="button" class="btn btn-save" (click)="deleteVendor()">Delete Vendor</button>
+        </div>
+    </div>
+
+</div>

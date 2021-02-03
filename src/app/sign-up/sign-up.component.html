@@ -1,0 +1,57 @@
+<div class="home-logo"><img src="/assets/images/logo.png"></div>
+<div id="signup-container">
+  <div class="container sign-up-form">
+    <div class="loading-anim">
+        <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+    </div>
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            Create an Account
+          </div>
+          <div class="card-body">
+            <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+              {{ alertMetaData.message }}
+            </div>
+
+            <form [formGroup]="form">
+              <div class="form-group">
+                <label for="fullname">Full name</label>
+                <small *ngIf="formErrors.name.message" class="float-right text-danger">{{ formErrors.name.message }}</small>
+                <input type="text" class="form-control" id="fullname" formControlName="name">
+              </div>
+              <div class="form-group">
+                <label for="funeralHome">Funeral home <span class="hinttext">(Leave blank when adding yourself as a team member) </span></label>
+                <small *ngIf="formErrors.funeralHome.message" class="float-right text-danger">{{ formErrors.funeralHome.message }}</small>
+                <input type="text" class="form-control" id="funeralHome" formControlName="funeralHome">
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <small *ngIf="formErrors.email.message" class="float-right text-danger">{{ formErrors.email.message }}</small>
+                <input type="email" class="form-control" id="email" formControlName="email">
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <label for="password">Password</label>
+                  <small *ngIf="formErrors.password.message" class="float-right text-danger">{{ formErrors.password.message }}</small>
+                  <input type="password" class="form-control" id="password" formControlName="password">
+                </div>
+                <div class="col">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <small *ngIf="formErrors.confirmPassword.message" class="float-right text-danger">{{ formErrors.confirmPassword.message }}</small>
+                  <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <span>Already have an account? <a routerLink="/">Log in</a></span>
+            <button type="submit" class="btn btn-save float-right" (click)="prepareFields()">Create an account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<notifier-container></notifier-container>

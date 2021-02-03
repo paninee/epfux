@@ -1,0 +1,74 @@
+<div class="account-list">
+    <div class="flex-header">
+        <div class="flex">
+            <h5 class="page-title">Accounts</h5>
+        </div>
+        <div class="flex" *ngIf="role === 'owner'">
+          <button class="btn btn-save" (click)="addStaffModal(content)">Add staff account</button>
+        </div>
+  </div>
+
+    <div class="flex-content">
+          <ul class="list-group">
+              <li class="list-group-item">
+                  <div class="inner-addon left-addon">
+                      <i class="fa fa-search"></i>
+                      <input type="text" class="form-control" id="search" placeholder="Search..." [(ngModel)]="search">
+                  </div> 
+              </li>
+              <li class="list-group-item">
+                <p>Name</p>
+                <p>Email</p>
+                <p class="text-right">Account Type</p>
+              </li>
+              <li class="list-group-item" *ngFor="let user of (userList | filter:search) as user">
+                  <p class="text-left">{{user.name}}</p>
+                  <p class="text-left">{{user.email}} <span *ngIf="isInvite(user.email)">(active)</span></p>
+                  <p class="text-right">{{user.role}}</p>
+              </li>
+              <li class="list-group-item" *ngIf="(userList | filter:search).length < 1">
+                <p>
+                    Not Data found
+                </p>
+              </li>
+              <li class="list-group-item">
+                <small>Showing {{ (userList | filter:search).length }} of {{(userList | filter:search).length}}</small>
+              </li>
+          </ul>
+    </div>
+</div>
+  
+  <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add staff account</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="alert text-center" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+              {{ alertMetaData.message }}
+            </div>
+          <form [formGroup]="form">
+              <div class="form-group">
+                <label for="email">Staff email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email">
+                <small *ngIf="formErrors.email.message" class="form-text text-danger">{{ formErrors.email.message }}</small>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel-bg" (click)="modal.close()">Cancel</button>
+          <button type="button" class="btn btn-save" (click)="prepareFields()">Save changes</button>
+      </div>
+    </ng-template>
+
+    <notifier-container></notifier-container>
+
+    <ng-template #customNotification let-notificationData="notification">
+      <div class="notier-container" type="notificationData.type">
+          <span><i class="fa fa-check"></i></span>
+          <p class="notifier__notification-message">{{notificationData.message}}</p>
+          <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+      </div>
+    </ng-template>

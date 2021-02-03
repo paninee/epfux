@@ -1,0 +1,22 @@
+<div class="group-container">
+  <div [ngClass]="INDENTIFIER === 'createBooking' ? 'flex-group flex-center' : 'flex-group'">
+    <div class="form-group flex-center-form-group">
+      <label for="" *ngIf="INDENTIFIER === 'createBooking'">Start time</label>
+      <ng-select [searchable]="false" [clearable]="false" [ngModel]="startDatetime" (ngModelChange)="onStartTimeChange($event)">
+        <ng-option *ngFor="let i of timeStamp" value="{{i}}">
+          {{i}}
+        </ng-option>
+      </ng-select>
+   </div>
+  </div>
+  <div [ngClass]="INDENTIFIER === 'createBooking' ? 'flex-group flex-end' : 'flex-group'">
+    <div class="form-group">
+        <label for="" *ngIf="INDENTIFIER === 'createBooking'">End time</label>
+      <ng-select [searchable]="false" [clearable]="false" [ngModel]="endDatetime" (ngModelChange)="onEndTimeChange($event)">
+        <ng-option *ngFor="let i of timeStamp" value="{{i}}">
+          {{i}}
+        </ng-option>
+      </ng-select>
+   </div>
+  </div>
+</div>

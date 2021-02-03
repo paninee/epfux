@@ -1,0 +1,153 @@
+<div class="vendor-create">
+
+    <div class="flex-header">
+        <div class="flex">
+            <div class="flex-title">
+                <a (click)="exitClick()" href="javaScript:void(0);">
+                    &lt; Vendors
+                </a>
+            </div>
+            <div class="flex-title">
+                <h5 class="page-title">Add a vendor</h5>
+            </div>
+        </div>
+        <div class="flex">
+          <button type="button" (click)="exitClick()" class="btn btn-cancel-bg">Cancel</button>
+          <button type="button" class="btn btn-save" (click)="prepareFields()">Save</button>
+        </div>
+    </div>
+
+
+    <form [formGroup]="form">
+    <div class="flex-content">
+        <div class="form-container">
+            <div class="content-header">
+                <h4>Contact Details</h4>
+             </div>
+                <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+                    {{ alertMetaData.message }}
+                </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                    <div class="form-group">
+                        <label for="contactName">Full name <span class="hinttext">(required)</span></label>
+                        <small *ngIf="formErrors.contactName.message" class="float-right text-danger">{{ formErrors.contactName.message }}</small>
+                        <input type="text" class="form-control" id="contactName" formControlName="contactName" placeholder="First and last name">
+                      </div>
+                </div>
+                <div class="contents_2 flex-end">
+                    <div class="form-group">
+                        <label for="Phone">Position</label>
+                        <small *ngIf="formErrors.street.message" class="float-right text-danger">{{ formErrors.role.message }}</small>
+                        <input type="text" class="form-control" id="position" formControlName="role" placeholder="Position">
+                    </div>
+                </div>
+              </div>
+
+              <div class="flex-row">
+                  <div class="contents_2">
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <small *ngIf="formErrors.email.message" class="float-right text-danger">{{ formErrors.email.message }}</small>
+                          <input type="text" class="form-control" id="email" formControlName="email">
+                        </div>
+                  </div>
+                  <div class="contents_2 flex-end">
+                      <div class="form-group">
+                          <label for="phoneNo">Phone</label>
+                          <small *ngIf="formErrors.phoneNo.message" class="float-right text-danger">{{ formErrors.phoneNo.message }}</small>
+                          <input type="text" class="form-control" id="phoneNo" formControlName="phoneNo">
+                      </div>
+                  </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="flex-content">
+        <div class="form-container">
+            <div class="content-header">
+                <h4>Vendor Address</h4>
+             </div>
+              <div class="flex-row">
+                <div class="contents_1">
+                    <div class="form-group">
+                        <label for="vendor">Vendor <span class="hinttext">(required)</span></label>
+                        <small *ngIf="formErrors.vendor.message" class="float-right text-danger">{{ formErrors.vendor.message }}</small>
+                        <input type="text" class="form-control" id="vendor" formControlName="vendor" placeholder="Vendor">
+                      </div>
+                </div>
+              </div>
+
+              <div class="flex-row">
+                  <div class="contents_2">
+                      <div class="form-group">
+                          <label for="street">Address</label>
+                          <small *ngIf="formErrors.street.message" class="float-right text-danger">{{ formErrors.street.message }}</small>
+                          <input type="text" class="form-control" id="street" formControlName="street">
+                        </div>
+                  </div>
+                  <div class="contents_2 flex-end">
+                      <div class="form-group">
+                          <label for="unitNo">Apt./Unit.No <span class="hinttext">(optional)</span></label>
+                          <small *ngIf="formErrors.unitNo.message" class="float-right text-danger">{{ formErrors.unitNo.message }}</small>
+                          <input type="text" class="form-control" id="unitNo" formControlName="unitNo">
+                      </div>
+                  </div>
+                </div>
+
+                <div class="flex-row">
+                    <div class="contents_2">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <small *ngIf="formErrors.city.message" class="float-right text-danger">{{ formErrors.city.message }}</small>
+                            <input type="text" class="form-control" id="city" formControlName="city">
+                          </div>
+                    </div>
+                    <div class="contents_2 flex-end">
+                        <div class="form-group">
+                            <label for="province">Province</label>
+                            <small *ngIf="formErrors.unitNo.message" class="float-right text-danger">{{ formErrors.province.message }}</small>
+                            <input type="text" class="form-control" id="province" formControlName="province">
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="flex-row">
+                      <div class="contents_2">
+                          <div class="form-group">
+                              <label for="city">Country</label>
+                              <small *ngIf="formErrors.country.message" class="float-right text-danger">{{ formErrors.country.message }}</small>
+                              <input type="text" class="form-control" id="country" formControlName="country">
+                            </div>
+                      </div>
+                      <div class="contents_2 flex-end">
+                          <div class="form-group">
+                              <label for="postalCode">Zip/Postal Code</label>
+                              <small *ngIf="formErrors.postalCode.message" class="float-right text-danger">{{ formErrors.postalCode.message }}</small>
+                              <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+                          </div>
+                      </div>
+                    </div>
+        </div>
+    </div>
+
+    </form>
+    
+    <div class="flex-footer">
+        <div class="flex-container">
+          <button type="button" (click)="exitClick()" class="btn btn-cancel-bg">Cancel</button>
+          <button type="button" class="btn btn-primary btn-save" (click)="prepareFields()">Save</button>
+        </div>
+    </div>
+
+</div>
+
+<notifier-container></notifier-container>
+
+<ng-template #customNotification let-notificationData="notification">
+    <div class="notier-container" type="notificationData.type">
+        <span><i class="fa fa-check"></i></span>
+        <p class="notifier__notification-message">{{notificationData.message}}</p>
+        <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+    </div>
+  </ng-template>

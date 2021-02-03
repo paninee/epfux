@@ -1,0 +1,731 @@
+<div class="booking-create">
+
+  <div class="flex-header">
+    <div class="flex">
+      <div class="flex-title">
+        <a (click)="exitClick()" href="javaScript:void(0);">
+          &lt; Bookings
+        </a>
+      </div>
+      <div class="flex-title">
+        <h5 class="page-title">Create New Booking</h5>
+      </div>
+    </div>
+    <div class="flex">
+      <button type="button" class="btn btn-cancel-bg" (click)="exitClick()">Cancel</button>
+      <button type="button" [ngClass]="isFormChanges ? 'btn btn-save' : 'btn btn-disabled'" (click)="prepareFields()">Save</button>
+    </div>
+  </div>
+
+
+  <form [formGroup]="form">
+    <div class="flex-container">
+      <div class="col-md-8 main-container">
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header">
+              <span>Contact details</span>
+            </div>
+            <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+              {{ alertMetaData.message }}
+            </div>
+            <div class="flex-row">
+              <div class="contents_3 flex-start">
+                <div class="form-group">
+                  <label for="clientName" [ngClass]="{'text-danger': formErrors.clientName.message}">First name <span class="hinttext">(required)</span></label>
+                  <small *ngIf="formErrors.clientName.message"
+                    class="float-right text-danger">{{ formErrors.clientName.message }}</small>
+                  <input type="text" class="form-control" id="clientName" formControlName="clientName"
+                    placeholder=""
+                    [(ngModel)]="clientName"
+                    (ngModelChange)="onchangeEvent($event)"
+                    >
+                </div>
+              </div>
+              <div class="contents_3 flex-center">
+                <div class="form-group">
+                  <label for="clientFamilyName" [ngClass]="{'text-danger': formErrors.clientFamilyName.message}">Family name <span class="hinttext">(required)</span></label>
+                  <small *ngIf="formErrors.clientFamilyName.message"
+                    class="float-right text-danger">{{ formErrors.clientFamilyName.message }}</small>
+                  <input type="text" class="form-control" id="clientFamilyName" formControlName="clientFamilyName"
+                    placeholder=""
+                    [(ngModel)]="clientFamilyName"
+                    (ngModelChange)="onchangeEvent($event)">
+                </div>
+              </div>
+              <div class="contents_3 flex-end">
+                <div class="form-group">
+                  <label for="clientRelationshipDeceased" [ngClass]="{'text-danger': formErrors.clientRelationshipDeceased.message}">Relation to deceased</label>
+                  <small *ngIf="formErrors.clientRelationshipDeceased.message"
+                    class="float-right text-danger">{{ formErrors.clientRelationshipDeceased.message }}</small>
+                  <input type="text" class="form-control" id="clientRelationshipDeceased"
+                    formControlName="clientRelationshipDeceased">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-row">
+              <div class="contents_2">
+                <div class="form-group">
+                  <label for="clientEmail" [ngClass]="{'text-danger': formErrors.clientEmail.message}">Email</label>
+                  <small *ngIf="formErrors.clientEmail.message"
+                    class="float-right text-danger">{{ formErrors.clientEmail.message }}</small>
+                  <input type="text" class="form-control" id="clientEmail" formControlName="clientEmail">
+                </div>
+              </div>
+              <div class="contents_2 flex-end">
+                <div class="form-group">
+                  <label for="clientPhoneNo" [ngClass]="{'text-danger': formErrors.clientPhoneNo.message}">Phone</label>
+                  <small *ngIf="formErrors.clientPhoneNo.message"
+                    class="float-right text-danger">{{ formErrors.clientPhoneNo.message }}</small>
+                  <input type="text" class="form-control" id="clientPhoneNo" formControlName="clientPhoneNo">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-row">
+              <div class="contents_2">
+                <div class="form-group">
+                  <label for="clientAddress" [ngClass]="{'text-danger': formErrors.clientAddress.message}">Address</label>
+                  <small *ngIf="formErrors.clientAddress.message"
+                    class="float-right text-danger">{{ formErrors.clientAddress.message }}</small>
+                  <input type="text" class="form-control" id="clientAddress" formControlName="clientAddress">
+                </div>
+              </div>
+              <div class="contents_2 flex-end">
+                <div class="form-group">
+                  <label for="clientAptNo"  [ngClass]="{'text-danger': formErrors.clientAptNo.message}">Apt./Unit No.</label>
+                  <small *ngIf="formErrors.clientAptNo.message"
+                    class="float-right text-danger">{{ formErrors.clientAptNo.message }}</small>
+                  <input type="text" class="form-control" id="clientAptNo" formControlName="clientAptNo">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-row">
+              <div class="contents_2">
+                <div class="form-group">
+                  <label for="clientCity" [ngClass]="{'text-danger': formErrors.clientCity.message}">City</label>
+                  <small *ngIf="formErrors.clientCity.message"
+                    class="float-right text-danger">{{ formErrors.clientCity.message }}</small>
+                  <input type="text" class="form-control" id="clientCity" formControlName="clientCity">
+                </div>
+              </div>
+              <div class="contents_2 flex-end">
+                <div class="form-group">
+                  <label for="clientProvince" [ngClass]="{'text-danger': formErrors.clientProvince.message}">Province/State</label>
+                  <small *ngIf="formErrors.clientProvince.message"
+                    class="float-right text-danger">{{ formErrors.clientProvince.message }}</small>
+                  <input type="text" class="form-control" id="clientProvince" formControlName="clientProvince">
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-row">
+              <div class="contents_2">
+                <div class="form-group">
+                  <label for="clientCountry" [ngClass]="{'text-danger': formErrors.clientCountry.message}">Country</label>
+                  <small *ngIf="formErrors.clientCountry.message"
+                    class="float-right text-danger">{{ formErrors.clientCountry.message }}</small>
+                  <input type="text" class="form-control" id="clientCountry" formControlName="clientCountry">
+                </div>
+              </div>
+              <div class="contents_2 flex-end">
+                <div class="form-group">
+                  <label for="clientPostalCode" [ngClass]="{'text-danger': formErrors.clientPostalCode.message}">Zip/Postal</label>
+                  <small *ngIf="formErrors.clientPostalCode.message"
+                    class="float-right text-danger">{{ formErrors.clientPostalCode.message }}</small>
+                  <input type="text" class="form-control" id="clientPostalCode" formControlName="clientPostalCode">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex-content">
+            <div class="form-container">
+              <div class="content-header">
+                <span>Vitals</span>
+              </div>
+              <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+                {{ alertMetaData.message }}
+              </div>
+              <div class="flex-row">
+                <div class="contents_3 flex-start">
+                  <div class="form-group">
+                    <label for="deceasedName" [ngClass]="{'text-danger': formErrors.deceasedName.message}">First name <span class="hinttext">(required)</span></label>
+                    <small *ngIf="formErrors.deceasedName.message"
+                      class="float-right text-danger">{{ formErrors.deceasedName.message }}</small>
+                    <input type="text" class="form-control" id="deceasedName" formControlName="deceasedName"
+                      placeholder=""
+                      [(ngModel)]="deceasedName"
+                      (ngModelChange)="onchangeEvent($event)">
+                  </div>
+                </div>
+                <div class="contents_3 flex-center">
+                  <div class="form-group">
+                    <label for="deceasedMiddleName" [ngClass]="{'text-danger': formErrors.deceasedMiddleName.message}">Middle name</label>
+                    <small *ngIf="formErrors.deceasedMiddleName.message"
+                      class="float-right text-danger">{{ formErrors.deceasedMiddleName.message }}</small>
+                    <input type="text" class="form-control" id="deceasedMiddleName" formControlName="deceasedMiddleName"
+                      placeholder="">
+                  </div>
+                </div>
+                <div class="contents_3 flex-end">
+                    <div class="form-group">
+                      <label for="deceasedFamilyName" [ngClass]="{'text-danger': formErrors.deceasedFamilyName.message}">Family name <span class="hinttext">(required)</span></label>
+                      <small *ngIf="formErrors.deceasedFamilyName.message"
+                        class="float-right text-danger">{{ formErrors.deceasedFamilyName.message }}</small>
+                      <input type="text" class="form-control" id="deceasedFamilyName" formControlName="deceasedFamilyName"
+                        placeholder=""
+                        [(ngModel)]="deceasedFamilyName"
+                        (ngModelChange)="onchangeEvent($event)">
+                    </div>
+                </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="deceasedGender">Gender</label>
+                    <ng-select [searchable]="false" [clearable]="false" labelForId="deceasedGender" formControlName="deceasedGender">
+                      <ng-option *ngFor="let i of genderEnums" value="{{i}}">
+                          {{i.charAt(0).toUpperCase() + i.slice(1)}}
+                      </ng-option>
+                  </ng-select>
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="deceasedMaritalStatus" [ngClass]="{'text-danger': formErrors.deceasedMaritalStatus.message}">Marital status</label>
+                    <small *ngIf="formErrors.deceasedMaritalStatus.message"
+                      class="float-right text-danger">{{ formErrors.deceasedMaritalStatus.message }}</small>
+                      <ng-select [searchable]="false" [clearable]="false" labelForId="deceasedMaritalStatus" formControlName="deceasedMaritalStatus">
+                          <ng-option *ngFor="let i of maritalStatus" value="{{i}}">
+                              {{i.charAt(0).toUpperCase() + i.slice(1)}}
+                          </ng-option>
+                      </ng-select>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="deceasedPlaceOfDeath" [ngClass]="{'text-danger': formErrors.deceasedPlaceOfDeath.message}">Place of death</label>
+                    <small *ngIf="formErrors.deceasedPlaceOfDeath.message"
+                      class="float-right text-danger">{{ formErrors.deceasedPlaceOfDeath.message }}</small>
+                    <input type="text" class="form-control" id="deceasedPlaceOfDeath" formControlName="deceasedPlaceOfDeath">
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="deceasedPlaceOfBirth" [ngClass]="{'text-danger': formErrors.deceasedPlaceOfBirth.message}">Place of birth</label>
+                    <small *ngIf="formErrors.deceasedPlaceOfBirth.message"
+                      class="float-right text-danger">{{ formErrors.deceasedPlaceOfBirth.message }}</small>
+                    <input type="text" class="form-control" id="deceasedPlaceOfBirth" formControlName="deceasedPlaceOfBirth">
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="deceasedSocialInsureNo" [ngClass]="{'text-danger': formErrors.deceasedSocialInsureNo.message}">Social Insurance Number <span class="hinttext">(SIN)</span></label>
+                    <small *ngIf="formErrors.deceasedSocialInsureNo.message"
+                      class="float-right text-danger">{{ formErrors.deceasedSocialInsureNo.message }}</small>
+                    <input type="text" class="form-control" id="deceasedSocialInsureNo" formControlName="deceasedSocialInsureNo">
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="deceasedAge" [ngClass]="{'text-danger': formErrors.deceasedAge.message}">Age</label>
+                    <small *ngIf="formErrors.deceasedAge.message"
+                      class="float-right text-danger">{{ formErrors.deceasedAge.message }}</small>
+                    <input type="text" class="form-control" id="deceasedAge" formControlName="deceasedAge">
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row padd-bot">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="deceasedEducationLevel" [ngClass]="{'text-danger': formErrors.deceasedEducationLevel.message}">Education level</label>
+                    <small *ngIf="formErrors.deceasedEducationLevel.message"
+                      class="float-right text-danger">{{ formErrors.deceasedEducationLevel.message }}</small>
+                    <input type="text" class="form-control" id="deceasedEducationLevel" formControlName="deceasedEducationLevel">
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="deceasedOccupation" [ngClass]="{'text-danger': formErrors.deceasedOccupation.message}">Occupation</label>
+                    <small *ngIf="formErrors.deceasedOccupation.message"
+                      class="float-right text-danger">{{ formErrors.deceasedOccupation.message }}</small>
+                    <input type="text" class="form-control" id="deceasedOccupation" formControlName="deceasedOccupation">
+                  </div>
+                </div>
+              </div>
+              <div class="content-header content-header-top">
+                  <span>Deceased address</span>
+              </div>
+
+              <div class="flex-row">
+                  <div class="contents_2">
+                    <div class="form-group">
+                      <label for="deceasedAddress" [ngClass]="{'text-danger': formErrors.deceasedAddress.message}">Address</label>
+                      <small *ngIf="formErrors.deceasedAddress.message"
+                        class="float-right text-danger">{{ formErrors.deceasedAddress.message }}</small>
+                      <input type="text" class="form-control" id="deceasedAddress" formControlName="deceasedAddress">
+                    </div>
+                  </div>
+                  <div class="contents_2 flex-end">
+                    <div class="form-group">
+                      <label for="deceasedAptNo" [ngClass]="{'text-danger': formErrors.deceasedAptNo.message}">Apt./Unit No.</label>
+                      <small *ngIf="formErrors.deceasedAptNo.message"
+                        class="float-right text-danger">{{ formErrors.deceasedAptNo.message }}</small>
+                      <input type="text" class="form-control" id="deceasedAptNo" formControlName="deceasedAptNo">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="flex-row">
+                  <div class="contents_2">
+                    <div class="form-group">
+                      <label for="deceasedCity" [ngClass]="{'text-danger': formErrors.deceasedCity.message}">City</label>
+                      <small *ngIf="formErrors.deceasedCity.message"
+                        class="float-right text-danger">{{ formErrors.deceasedCity.message }}</small>
+                      <input type="text" class="form-control" id="deceasedCity" formControlName="deceasedCity">
+                    </div>
+                  </div>
+                  <div class="contents_2 flex-end">
+                    <div class="form-group">
+                      <label for="deceasedProvince" [ngClass]="{'text-danger': formErrors.deceasedProvince.message}">Province/State</label>
+                      <small *ngIf="formErrors.deceasedProvince.message"
+                        class="float-right text-danger">{{ formErrors.deceasedProvince.message }}</small>
+                      <input type="text" class="form-control" id="deceasedProvince" formControlName="deceasedProvince">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="flex-row padd-bot">
+                  <div class="contents_2">
+                    <div class="form-group">
+                      <label for="deceasedCountry" [ngClass]="{'text-danger': formErrors.deceasedCountry.message}">Country</label>
+                      <small *ngIf="formErrors.deceasedCountry.message"
+                        class="float-right text-danger">{{ formErrors.deceasedCountry.message }}</small>
+                      <input type="text" class="form-control" id="deceasedCountry" formControlName="deceasedCountry">
+                    </div>
+                  </div>
+                  <div class="contents_2 flex-end">
+                    <div class="form-group">
+                      <label for="deceasedPostalCode" [ngClass]="{'text-danger': formErrors.deceasedPostalCode.message}">Zip/Postal</label>
+                      <small *ngIf="formErrors.deceasedPostalCode.message"
+                        class="float-right text-danger">{{ formErrors.deceasedPostalCode.message }}</small>
+                      <input type="text" class="form-control" id="deceasedPostalCode" formControlName="deceasedPostalCode">
+                    </div>
+                  </div>
+              </div>
+
+              <div class="content-header content-header-top">
+                  <span>Familiy members</span>
+              </div>
+              <div formArrayName="familyMembers" *ngFor="let fam of form.get('familyMembers').value; let i=index; trackBy: trackByFn;" class="container-fam">
+                  <ng-container [formGroupName]="i">
+                    <div class="flex-row">
+                      <div class="contents_2">
+                        <div class="form-group">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                          </div>
+                      </div>
+                      <div class="contents_2">
+                          <div class="form-group">
+                              <label for="familyName">Family name</label>
+                              <input type="text" class="form-control" id="familyName" formControlName="familyName">
+                            </div>
+                      </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="contents_2">
+                          <div class="form-group">
+                              <label for="relationshipDeceased">Relationship to deceased</label>
+                              <ng-select [searchable]="false" [clearable]="false" labelForId="relationshipDeceased" formControlName="relationshipDeceased">
+                                <ng-option *ngFor="let i of relationshipDeceasedEnums" value="{{i}}">
+                                    {{i.charAt(0).toUpperCase() + i.slice(1)}}
+                                </ng-option>
+                            </ng-select>
+                            </div>
+                        </div>
+                        <div class="contents_2">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" formControlName="city">
+                              </div>
+                        </div>
+                      </div>
+              </ng-container>
+              </div>
+            <div class="flex-row">
+              <div class="add-new-toogle">
+                <div  [ngClass]="isDisabled ? 'add-new-title add-fam-btn' : 'add-new-title'" (click)="addFamilyMembers()">
+                  <span><i class="fa fa-plus" aria-hidden="true"></i> Add a family member</span>
+                </div>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header">
+              <span>Funeral details</span>
+            </div>
+            <div class="flex-row" *ngIf="!hasImage">
+              <div class="contents_1">
+                <div class="form-group">
+                  <small *ngIf="formErrors.deceasedImage.message"
+                    class="float-right text-danger">{{ formErrors.deceasedImage.message }}</small>
+                  <app-uppy 
+                    [ngClass]="{'disabled-with-spinner-element': uploadingImages}"
+                    (images)="populateImages($event)"
+                    (isUploading)="isUploading($event)"
+                    (error)="populateError($event)">
+                  </app-uppy>
+                </div>
+              </div>
+            </div>
+            <div class="flex-row" *ngIf="hasImage">
+              <div class="contents_1 flex-center">
+                <div class="thumbnail">
+                  <img [src]="imagePath" class="portrait" alt="Image" />
+                </div>
+              </div>
+            </div>
+            <div class="flex-row" *ngIf="hasImage">
+              <div class="contents_1 flex-center">
+                <span (click)="setHasImage()" class="spanbtn">Change photo</span>
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="contents_3">
+                <div class="form-group">
+                  <label for="dateOfDeath">Date of death</label>
+                  <small *ngIf="formErrors.dateOfDeath.message"
+                    class="float-right text-danger">{{ formErrors.dateOfDeath.message }}</small>
+                  <input type="text" class="form-control" ngbDatepicker #dateOfDeath="ngbDatepicker"
+                    formControlName="dateOfDeath" (click)="dateOfDeath.toggle()"/>
+                </div>
+              </div>
+              <div class="contents_3_3">
+                <div class="form-check preNeed-checkbox">
+                    <input type="checkbox"
+                           class="form-check-input"
+                           formControlName="preNeed"
+                           (ngModelChange)="preNeedOnChange($event)"
+                           id="preNeed"
+                    >
+                    <label class="form-check-label" for="preNeed"></label>
+                    <span>Pre need (member has not passed away)</span>
+                  </div>
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="contents_3 flex-start">
+                <div class="form-group">
+                  <label for="serviceDate">Funeral date</label>
+                  <small *ngIf="formErrors.serviceDate.message"
+                    class="float-right text-danger">{{ formErrors.serviceDate.message }}</small>
+                  <input type="text" class="form-control ngselect-height" ngbDatepicker #dateService="ngbDatepicker"
+                    formControlName="serviceDate" (click)="dateService.toggle()" />
+                </div>
+              </div>
+              <div class="contents_3_3">
+                <div class="form-group">
+                  <small *ngIf="formErrors.serviceStartEnd.message"
+                    class="float-right text-danger">{{ formErrors.serviceStartEnd.message }}</small>
+                  <app-time-picker name="activeEndDate" 
+                    (startTime)="populateStartTime($event)"
+                    (endTime)="populateEndTime($event)"
+                    [clearData]="clearData"
+                    INDENTIFIER="createBooking">
+                  </app-time-picker>
+                </div>
+              </div>
+            </div>
+            <div class="flex-row">
+              <div class="contents_1">
+                <div class="form-group">
+                  <label for="eulogy">Obituary</label>
+                  <small *ngIf="formErrors.eulogy.message"
+                    class="float-right text-danger">{{ formErrors.eulogy.message }}</small>
+                    <app-ckeditor
+                    (eulogy)="poplateEulogy($event)"
+                    [clearData]="clearData"
+                    ></app-ckeditor>
+                </div>
+              </div>
+            </div>
+            <div class="content-header">
+              <span>Funeral events</span>
+            </div>
+            <div formArrayName="funeralEvents" class="flex-row"
+              *ngFor="let events of form.get('funeralEvents').value; let i=index; trackBy: trackByFn;">
+              <ng-container [formGroupName]="i">
+                <div class="contents_2">
+                    <div class="form-group">
+                      <label for="eventsType">Event type</label>
+                      <ng-select [searchable]="false" [clearable]="false" labelForId="eventsType" formControlName="eventsType">
+                        <ng-option *ngFor="let i of eventsTypeEnums" value="{{i}}">
+                            {{i.charAt(0).toUpperCase() + i.slice(1)}}
+                        </ng-option>
+                    </ng-select>
+                    </div>
+                </div>
+                <div class="contents_2 flex-end">
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" formControlName="location">
+                      </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex-row">
+              <div class="add-new-toogle">
+                <div  [ngClass]="isDisabled ? 'add-new-title add-fam-btn' : 'add-new-title'" (click)="addFuneralEvents()">
+                  <span><i class="fa fa-plus" aria-hidden="true"></i> Add an event</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header">
+              <span>Services and invoice</span>
+            </div>
+
+            <div class="flex-row">
+              <div class="contents_1">
+                <div class="add-new-toogle">
+                  <div class="add-new-title" (click)="onClick()">
+                    <span><i class="fa fa-plus" aria-hidden="true"></i> Add a service</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <app-service-list *ngIf="showService || updateServiceList.length > 0"></app-service-list> -->
+            <app-service-list></app-service-list>
+
+            <div class="flex-row">
+              <div class="content_1">
+                <div class="form-group">
+                  <label for="invoiceStatus">Invoice status</label>
+                  <ng-select [searchable]="false" [clearable]="false" labelForId="invoiceStatus" formControlName="invoiceStatus">
+                      <ng-option *ngFor="let i of invoiceStatus" value="{{i}}">
+                          <img *ngIf="i === 'partially paid'" src="/assets/images/icons/status-partial.png" width="5px" height="5px" class="invoice-status-bullet"/>
+                          <img *ngIf="i === 'waiting payment'" src="/assets/images/icons/status-waiting.png" width="5px" height="5px" class="invoice-status-bullet"/>
+                          <img *ngIf="i !== 'waiting payment' && i !== 'partially paid'" src="/assets/images/icons/status-{{i}}.png" width="5px" height="5px" class="invoice-status-bullet"/>
+                          {{i.charAt(0).toUpperCase() + i.slice(1)}}
+                      </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-row services-container-btn">
+              <div class="content_1 text-right">
+                <button type="button"
+                    [ngClass]="isEmptyService() ? 'btn btn-cancel-bg' : 'btn btn-disabled'"
+                    (click)="goToInvoice()">Print invoice</button>
+                <button type="button" 
+                  [ngClass]="isEmptyService() ? 'btn btn-cancel-bg' : 'btn btn-disabled'"
+                  (click)="sendBookingInvoiceEmail()">Email invoice</button>
+                <button type="button" 
+                  *ngIf="!paymentComplete" 
+                  [ngClass]="isEmptyService() ? 'btn btn-save' : 'btn btn-disabled'" 
+                  data-toggle="modal" 
+                  data-target="#billing-modal">Pay with credit card</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header">
+              <span>Vendors</span>
+            </div>
+            <div *ngIf="selectedVendorsList.length > 0">
+              <div class="vendor-list-container">
+                <div class="vendor-contents" *ngFor="let vendor of vendorDataFilterDuplicate()">
+                  <div class="vendor-name">{{vendor.name ? vendor.name : ''}}</div>
+                  <div class="vendor-address" *ngIf="vendor.address">{{vendor.address.unitNo ? vendor.address.unitNo : ''}} {{vendor.address.province ? vendor.address.province : ''}}</div>
+                  <div class="vendor-country" *ngIf="vendor.address">{{vendor.address.country ? vendor.address.country : ''}}</div>
+                  <div class="vendor-phone">{{vendor.phoneNo ? vendor.phoneNo : ''}}</div>
+                </div>
+              </div>
+              <div class="vendor-footer">
+                <span>Add and edit vendors in the <a routerLink="/vendors">Vendors section</a></span>
+              </div>
+            </div>
+            <div *ngIf="selectedVendorsList.length <= 0">
+              <div class="vendor-list-no-data">
+                Vendor information will show here once services are added to the invoice.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header">
+              <span>Employee assignments</span>
+            </div>
+            <div formArrayName="employees" class="flex-row"
+              *ngFor="let emp of form.get('employees').value; let i=index; trackBy: trackByFn;">
+              <ng-container [formGroupName]="i">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="employee">Employee</label>
+                    <ng-select [searchable]="false" [clearable]="false" labelForId="employee" formControlName="employee">
+                      <ng-option *ngFor="let i of userList" value="{{i._id}}">
+                        {{i.name.charAt(0).toUpperCase() + i.name.slice(1)}}
+                      </ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="assignment">Assignment</label>
+                    <small *ngIf="formErrors.assignment.message"
+                      class="float-right text-danger">{{ formErrors.assignment.message }}</small>
+                    <input type="text" class="form-control" id="assignment" formControlName="assignment">
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="flex-row">
+              <div class="add-new-toogle">
+                <div  [ngClass]="isDisabled ? 'add-new-title add-fam-btn' : 'add-new-title'" (click)="addEmployee()">
+                  <span><i class="fa fa-plus" aria-hidden="true"></i> Add an employee</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 side-container">
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header add-padd">
+              <div class="header-title"><span>Notes</span></div>
+              <div class="header-edit">
+                <span>
+                  <a class="edit" (click)="editNotes()">
+                    {{ openNote ? 'Save' : 'Edit' }}   
+                  </a>
+                </span>
+              </div>
+            </div>
+            <div class="flex-row">
+                <ng-container *ngIf="!openNote">
+                    <span  class="notes-container" *ngIf="!form.controls.notes.value">
+                        No notes for this booking.
+                    </span>
+                    <span  class="notes-container" *ngIf="form.controls.notes.value">
+                        {{form.controls.notes.value}}
+                    </span>
+                </ng-container>
+                <div class="content_1" *ngIf="openNote">
+                  <div class="form-group">
+                    <label for="notes">Add notes</label>
+                    <small *ngIf="formErrors.notes.message"
+                      class="float-right text-danger">{{ formErrors.notes.message }}</small>
+                    <textarea class="form-control noresize" id="notes" rows="3" formControlName="notes"></textarea>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-content">
+          <div class="form-container">
+            <div class="content-header add-padd">
+              <div class="header-title"><span>Documents</span></div>
+              <div class="header-edit">
+                <app-uppy-multipart
+                  (documents)="populateDocuments($event)"
+                  (isLoading)="populateIsLoading($event)"
+                  (error)="populateError($event)"
+                  source="booking"
+                  ></app-uppy-multipart>
+              </div>
+            </div>
+
+            <div class="flex-row">
+              <div class="document-container">
+                <div class="anim-container">
+                    <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+                </div>
+                <span *ngIf="documents.length <= 0">
+                  No documents associated with this this booking.
+                </span>
+                  <ul class="list-unstyled">
+                    <li *ngFor="let doc of documents">
+                      <span>
+                        <a target="_blank" href="{{doc}}" download="{{ splitString(doc) }}">
+                          {{ splitString(doc) }}
+                        </a>
+                      </span>
+                      <!-- <span><i class="fa fa-download" aria-hidden="true"></i></span> -->
+                    </li>
+                  </ul>
+                  <!-- <app-uppy-multipart 
+                  (documents)="populateDocuments($event)"
+                  (isLoading)="populateIsLoading($event)"
+                  source="booking"
+                  >
+                  </app-uppy-multipart> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex-footer">
+    <div class="flex-footer-container">
+        <button 
+        type="button"
+        class="btn btn-cancel-bg" 
+        (click)="exitClick()">
+        Cancel</button>
+      <button type="button" (click)="prepareFields()" [ngClass]="isFormChanges ? 'btn btn-save' : 'btn btn-disabled'">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="billing-modal" tabindex="-1" role="dialog" aria-labelledby="billing-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <app-stripe-test
+        *ngIf="!isLoading"
+        (addServiceBooking)="populateServiceToken($event)"
+        [STRIPE_API_KEY]="env.STRIPE_API_KEY"
+        IDENTIFIER="createBooking"
+      >
+      </app-stripe-test>
+  </div>
+</div>
+
+<notifier-container></notifier-container>
+
+<ng-template #customNotification let-notificationData="notification">
+  <div class="notier-container" type="notificationData.type">
+      <span><i class="fa fa-check"></i></span>
+      <p class="notifier__notification-message">{{notificationData.message}}</p>
+      <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+  </div>
+</ng-template>

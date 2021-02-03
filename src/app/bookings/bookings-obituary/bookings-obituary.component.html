@@ -1,0 +1,25 @@
+<div class="booking-obituary">
+    <div class="container">
+        <div class="flex-content">
+            <div class="pdf-container">
+              <div class="flex-container">
+                <div class="fontTitle">In memory of</div>
+                <div class="fontName text-center">{{ booking.deceasedName }}</div>
+                <div class="contents_1 image-container-flex" *ngIf="hasImage">
+                  <div class="image-container">
+                      <img [src]="imagePath" class="img-fluid" />
+                  </div>
+                </div>
+                <div class="service-details text-center">
+                  <div *ngIf="booking.serviceStart && booking.serviceEnd">Service details:</div>
+                  <div class="font-weight-bold"> <span *ngIf="booking.serviceStart">{{ booking.serviceStart | date : 'EEEE, MMMM d, y' }} at </span> <span *ngIf="booking.serviceStart">{{ booking.serviceStart | date : 'shortTime' }} -</span> <span *ngIf="booking.serviceEnd"> {{ booking.serviceEnd | date : 'shortTime' }} </span></div>
+                  <!-- <div><span class="font-weight-bold">at {{booking.serviceLocation}}</span></div> -->
+                  <div>{{booking.serviceLocation}}</div>
+                </div>
+                <div class="eulogy-text" id="eulogy-text" [innerHtml]="addEulogy" #eulogyText>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="d-flex" id="wrapper">
+  <app-navigations *ngIf="!checkRoutes()"></app-navigations>
+  <div id="page-content-wrapper" [ngClass]=" checkRoutes() ? 'remove-padding':''">
+    <app-header *ngIf="!checkRoutes()"></app-header>
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

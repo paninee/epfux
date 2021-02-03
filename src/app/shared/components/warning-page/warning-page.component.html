@@ -1,0 +1,12 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" (click)="closeServices()">
+        <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+      </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to leave without saving your changes?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-cancel-bg" (click)="closeServices()">Cancel</button>
+    <button type="button" class="btn btn-save" (click)="exit()">Leave page</button>
+  </div>

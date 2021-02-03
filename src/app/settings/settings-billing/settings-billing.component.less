@@ -1,0 +1,87 @@
+@import '../../../styles/lib.less';
+ 
+.settings-billing {
+ .flex-header{
+  .flex-header();
+   .flex{
+    display:flex;
+    &:nth-child(1){
+      flex-direction: column;
+    }
+    .page-title{
+      font-size: 1.8rem;
+    }
+   }
+ }
+ .flex-content{
+  .flex-content(100%);
+  .content-container{
+    .content-container();
+    .content-header{
+      .content-header();
+      h4{
+        .content-header-title(1.2rem,600);
+      }
+    }
+    .content{
+      padding:3%;
+      border-bottom: 1px solid @border-color-btn;
+      &.content-bank-details{
+        border-bottom: none;
+        padding-bottom: 0px;
+      }
+      .content-card{
+        display:flex;
+        .content-img{
+          height: 50px;
+          width: 50px;
+          display: flex;
+        }
+        .content-card-details{
+          display: flex;
+          flex-direction: column;
+          margin-left:2%;
+          .content-card-details-info{
+            display:flex;
+            div:first-child{
+              padding-right: 10px;
+            }
+            span{
+              font-size: 1.1rem;
+              font-weight: 900;
+            }
+            .bull-class{
+              letter-spacing: 6px;
+            }
+          }
+          .content-card-details-exp{
+            display: flex;
+            flex-direction: column;
+            span{
+              font-size: 0.9rem;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+    .content-footer{
+      padding: 2%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+ }
+ .flex-footer{
+  .flex-header();
+  justify-content: flex-end;
+  .flex-footer-container{
+    display: flex;
+    flex-direction: row;
+  }
+ }
+}
+
+.form-container{
+  padding: 3%;
+}

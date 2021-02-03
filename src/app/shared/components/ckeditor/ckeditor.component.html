@@ -1,0 +1,8 @@
+<ckeditor
+  [editor]="Editor"
+  (ready)="onReady($event)"
+  (ngModelChange)="onChanged($event)"
+  [(ngModel)]="eulogyData"
+  [ngModelOptions]="{standalone: true}"
+  [config]="config">
+</ckeditor>

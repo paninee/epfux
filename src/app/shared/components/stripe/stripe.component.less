@@ -1,0 +1,71 @@
+@import '../../../../styles/lib.less';
+@import '../../../../styles/app.less';
+
+.flex-row{
+  display: flex;
+  width: 100%;
+  .contents_1{
+    display: flex;
+    width: 100%;
+    .form-group{
+      width:100%;
+    }
+  }
+  .contents_2{
+    display: flex;
+    width: 50%;
+    .form-group{
+      width: 95%;
+    }
+  }
+  .label-total-container{
+    margin-bottom: 0;
+  }
+  .total-container{
+    width: 100%;
+    display: flex;
+    border: 1px solid #DFE3E8;
+    margin-bottom: 1rem;
+    border-radius: .25rem;
+    .total-container-1{
+      display: flex;
+      width: 70%;
+      .form-control{
+        border: 1px solid transparent;
+        &:focus{
+          box-shadow: none !important; 
+        }
+      }
+    }
+    .total-container-2{
+      display: flex;
+      width: 30%;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right:1rem;
+      color:#637481;
+    }
+  }
+}
+.btn-payment{
+  background-color: @main-button-color;
+  border-color: @main-button-color;
+}
+
+.loading-text{
+  position: absolute;
+  right: 0;
+  left: 40%;
+  top: 64%;
+  z-index: 99;
+  width: 100%;
+  color:@main-button-color;
+}
+.alert{
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content{
+  width: 700px !important;
+}

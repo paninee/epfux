@@ -1,0 +1,119 @@
+<div class="account-details">
+
+    <div class="flex-header">
+        <div class="flex">
+            <div class="flex-title">
+                <h5 class="page-title">{{ user ? user.name : ''}}</h5>
+            </div>
+            <div class="flex-title">
+                <small>{{ role ? role.charAt(0).toUpperCase() + role.slice(1) : '' }}</small>
+            </div>
+        </div>
+        <div class="flex">
+          <button type="button" (click)="exitClick()" class="btn btn-cancel-bg">Cancel</button>
+          <button type="button" (click)="prepareFields()" class="btn btn-save">Save</button>
+        </div>
+    </div>
+
+    <div class="flex-content">
+        <div class="form-container">
+            <form [formGroup]="form">
+                <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+                    {{ alertMetaData.message }}
+                </div>
+              <div class="flex-row">
+                  <div class="contents_1">
+                      <div class="form-group">
+                          <label for="name">Full name</label>
+                          <small *ngIf="formErrors.name.message" class="float-right text-danger">{{ formErrors.name.message }}</small>
+                          <input type="text" class="form-control" id="name" formControlName="name">
+                        </div>
+                  </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <small *ngIf="formErrors.email.message" class="float-right text-danger">{{ formErrors.email.message }}</small>
+                        <input type="email" class="form-control" id="email" formControlName="email">
+                      </div>
+                </div>
+                <div class="contents_2 flex-end">
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="text" class="form-control" id="phone" formControlName="phone">
+                    </div>
+                </div>
+              </div>
+              <div class="flex-row padd-top">
+                  <div class="contents_1">
+                    <button type="button" class="btn btn-cancel-bg" (click)="changePasswordModal(content)">Change your password</button>
+                  </div>
+              </div>
+              </form>  
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Change your password</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body changed-password-body">
+        <form [formGroup]="changePassForm">
+            <div class="flex-row divider-border">
+                <div class="contents_1">
+                    <div class="form-group">
+                        <label for="name">Enter current password</label>
+                        <small *ngIf="changePassErrors.currentPassword.message" class="float-right text-danger">{{ changePassErrors.currentPassword.message }}</small>
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            id="currentPassword"
+                            formControlName="currentPassword">
+                      </div>
+                </div>
+            </div>
+            <div class="flex-row">
+                <div class="contents_1">
+                    <div class="form-group">
+                        <label for="name">New password</label>
+                        <small *ngIf="changePassErrors.newPassword.message" class="float-right text-danger">{{ changePassErrors.newPassword.message }}</small>
+                        <input 
+                            type="password"
+                            class="form-control"
+                            id="newPassword"
+                            formControlName="password">
+                      </div>
+                </div>
+                <div class="contents_1">
+                    <div class="form-group">
+                        <label for="name">Confirm new password</label>
+                        <small *ngIf="changePassErrors.confirmPassword.message" class="float-right text-danger">{{ changePassErrors.confirmPassword.message }}</small>
+                        <input 
+                            type="password"
+                            class="form-control"
+                            id="confirmPassword"
+                            formControlName="confirmPassword">
+                      </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancel-bg" (click)="modal.close()">Cancel</button>
+        <button type="button" class="btn btn-save" (click)="prepareChangePassword()">Change password</button>
+    </div>
+  </ng-template>
+
+<notifier-container></notifier-container>
+<ng-template #customNotification let-notificationData="notification">
+    <div class="notier-container" type="notificationData.type">
+        <span><i class="fa fa-check"></i></span>
+        <p class="notifier__notification-message">{{notificationData.message}}</p>
+        <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+    </div>
+  </ng-template>

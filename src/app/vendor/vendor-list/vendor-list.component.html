@@ -1,0 +1,83 @@
+<div class="vendor-list">
+    <div class="flex-header">
+        <div class="flex">
+            <h5 class="page-title">Vendors</h5>
+        </div>
+        <div class="flex" *ngIf="role === 'owner'">
+          <button type="button" class="btn btn-primary btn-save" routerLink="/vendors/create">Add a vendor</button>
+        </div>
+  </div>
+
+    <div class="flex-content">
+            <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+          <ul class="list-group">
+              <li class="list-group-item">
+                <div class="inner-addon left-addon">
+                        <i class="fa fa-search"></i>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id="search"
+                            placeholder="Search..."
+                            [(ngModel)]="search"
+                            (ngModelChange)="findKeyword(search)"
+                        />
+                </div>
+              </li>
+              <li class="list-group-item">
+                  <div class="list-group-flex-1"><p>Vendor</p></div>
+                  <div class="list-group-flex-2"><p>Contact</p></div>
+                  <div class="list-group-flex-2 text-right"><p>Phone</p></div>
+              </li>
+
+              <li class="list-group-item" *ngFor="let vendor of ( vendorList | paginate: { id: 'server', itemsPerPage: limit, currentPage: p, totalItems : vendorTotal }) as vendor" (click)="showVendorDetails(vendor)">
+                    <div class="list-group-flex-1"><p class="vendor-title">{{vendor.name}}</p></div>
+                    <div class="list-group-flex-2"><p>{{vendor.contactName}}</p></div>
+                    <div class="list-group-flex-2 text-right"><p>{{vendor.phoneNo ? vendor.phoneNo : '-'}}</p></div>
+                </li>
+
+              <li class="list-group-item" *ngIf="(vendorList).length < 1">
+                <p>
+                    Not Data found
+                </p>
+              </li>
+              <li class="list-group-item pagination-item">
+                <div [ngClass]="isLoading ? 'hidden-box' : ''">
+                    <small>Showing {{ (vendorList).length }} of {{ vendorTotal }}</small>
+                </div>
+                <div>
+                    <pagination-controls 
+                        (pageChange)="getPage($event)"
+                        id="server" 
+                        previousLabel=""
+                        nextLabel="">
+                    </pagination-controls>
+                </div>
+              </li>
+          </ul>
+    </div>
+
+    <div class="flex-content">
+        <div class="anim-container">
+            <app-loading-anim *ngIf="fileIsLoading"></app-loading-anim>
+        </div>
+        <ul class="list-group footer-content">
+            <li class="list-group-item">
+                <div class="flex-footer-content">
+                    <p>Import your list of vendors using a CSV file. <a href="http://epilogsoftware.com/pages/import-your-vendor-list" target="_blank">Learn more</a> about importing your vendor list.</p>
+                </div>
+                <div>
+                    <app-uppy-multipart 
+                    source="vendor"
+                    (documents)="populateDocuments($event)"
+                    (isLoading)="populateIsLoading($event)"
+                    (error)="populateErrorMessage($event)"
+                    >
+                    </app-uppy-multipart>
+                </div>
+              </li>
+        </ul>
+    </div>
+</div>
+
+<notifier-container></notifier-container>

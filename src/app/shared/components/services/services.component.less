@@ -1,0 +1,52 @@
+@import '../../../../styles/lib.less';
+.modal-header{
+  .icon-container{
+    padding-right: 2%;
+    padding-top: 4px;
+    cursor: pointer;
+  }
+}
+.modal-body{
+  padding: 0rem;
+  margin-top: 0 !important;
+  .service-modal{
+    .list-group{
+      .list-group-item{
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-bottom: 1px solid @border-secondary;
+        .flex-box(flex,space-between);
+        cursor: pointer;
+        &:last-child{
+          border-bottom: none;
+        }
+      }
+    } 
+  }
+  .modal-service{
+    .form-container{
+      .padd-left{
+        padding-right:10px;
+      }
+      .row-container{
+        padding: 10px 20px 10px 20px;
+        border-bottom: 1px solid @border-secondary;
+        &:last-child{
+          border-bottom: none;
+        }
+        .checkbox-row{
+          height:40px;
+        }
+        .flex_row{
+          padding-bottom: 20px;
+        }
+        .flex-row-left{
+          padding-left:35px;
+        }
+        .form-check{
+          .form-check(0.3rem);
+        }
+      }
+    } 
+  }
+}

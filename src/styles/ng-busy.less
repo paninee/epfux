@@ -1,0 +1,101 @@
+@import 'lib';
+
+/////////////////////////// busy indicator ///////////////////////
+.ng-busy.ng-busy-for-element {
+  position: absolute;
+  top: 40%;
+}
+.ng-busy {
+  z-index: 9998;
+}
+.ng-busy-backdrop {
+  z-index: 9997;
+  position: fixed;
+}
+.ng-busy-default-sign {
+  z-index: 9999;
+}
+
+/////// style busy indicator ///////
+.ng-busy{
+  color: white;
+  top: 50%;
+  left: 50%;
+  text-indent: -15px;
+  position: fixed;
+  width: 3em;
+  height: 3em;
+  animation: loaderAnim 1.25s infinite ease-in-out;
+  outline: 1px solid transparent;
+  text-indent: 0;
+  margin-left: -25px;
+  &:before{
+    content:'';
+    height: 3em;
+    width: 3em;
+    border: 2px solid #f1f2f3;
+    outline: 1px solid transparent;
+    position: fixed;
+    left: 0;
+    top:0;
+  }
+  &:after{
+    content:'';
+    height: 3em;
+    width: 3em;
+    background-color: @main-color;
+    position: fixed;
+    z-index: 1;
+    outline: 1px solid transparent;
+    top: 0;
+    left: 0;
+    animation: smallBoxAnim 1.25s alternate infinite ease-in-out;
+  }
+  animation: loaderAnim 1.25s infinite ease-in-out;
+  outline: 1px solid transparent;
+
+  @keyframes loaderAnim {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+
+  }
+  @keyframes smallBoxAnim {
+    0% {
+      transform: scale(0.2);
+    }
+    100% {
+      transform: scale(0.75);
+    }
+  }
+}
+.ng-busy-backdrop {
+  background: #002741;
+  opacity: .85;
+  width: 100%;
+  height: 100%;
+}
+.ng-busy-default-sign{
+  border: none;
+  border-radius: 0;
+}
+.ng-busy-default-sign{
+  color: white;
+  background: none;
+  border: none;
+}
+.ng-busy-default-text {
+  margin-top: 40px;
+  width: 320px;
+  text-align: center;
+  font-family: @main-font;
+  display: block;
+  text-align: center;
+  margin-left: -150px;
+}
+.ng-busy-default-spinner{
+  display: none;
+}

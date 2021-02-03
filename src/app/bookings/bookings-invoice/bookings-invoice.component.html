@@ -1,0 +1,117 @@
+<div class="booking-invoice">
+    <div class="container">
+      <div class="row">
+          <div class="col-md-6 text-left">
+            <div class="header">Funeral Service Contact</div>
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="header-title">Contract #{{booking.contractNo}}</div>
+            <div class="header-title font-weight-normal">{{ booking.serviceStart | date : 'mediumDate' }}</div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 text-left">
+          <div class="header-text space-bot">Between:</div>
+          <div class="header-text">{{ home.name }}</div>
+          <div class="address">
+            {{home.address.unitNo }} {{home.address.street}}
+            <br>
+            {{home.address.city }} {{home.address.province}}
+            <br>
+            {{home.address.postalCode}}
+          </div>
+        </div>
+        <div class="col-md-4 text-left">
+          <div class="header-text space-bot">And:</div>
+          <div class="header-text">{{booking.clientName}} <span>(the purchaser)</span></div>
+          <div *ngIf="booking.clientRelationshipDeceased !== null">
+            ({{booking.clientRelationshipDeceased}})
+          </div>
+          <div *ngIf="booking.clientPhoneNo">
+            {{booking.clientPhoneNo}}
+          </div>
+        </div>
+        <div class="col-md-4 text-left">
+            <div class="header-text space-bot">Benefieciery:</div>
+            <div class="header-text">{{ booking.deceasedName }} <span>(the person for whom funeral services, or supplies, or both, are to be provided).</span></div>
+            <div class="address">
+              {{booking.serviceLocation}}
+            </div>
+        </div>
+        <div class="col-md-4 offset-md-8 padd">
+            <div class="date">Date of death: {{ booking.dateOfDeath | date : 'mediumDate' }}</div>
+            <div class="date">Place of death: Hospital</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="list-services services">
+              <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let service of serviceList">
+                  <li class="list-group-item" *ngIf="service.name">
+                    <div *ngIf="service.name && service.name === 'Vehicles'">
+                      {{service.name }} <span>{{ service.additionalInfo[0].value }}</span>
+                    </div>
+                    <div *ngIf="service.name && service.name !== 'Vehicles'">
+                        {{ service.name }}
+                    </div>
+                    <div *ngIf="service.name">
+                        <span>${{ formatToPrice(service.price) }}</span>
+                      </div>
+                  </li>
+                </ng-container>
+              </ul>
+          </div>
+          <div class="list-services total">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div>Discount</div>
+                  <div>
+                    <span *ngIf="booking.discountAmount === 0 && booking.discountPercentage !== 0">
+                      {{booking.discountPercentage}}%
+                    </span>
+                    <span *ngIf="booking.discountPercentage === 0 && booking.discountAmount !== 0">
+                        ${{booking.discountAmount}}
+                    </span>
+                    <span *ngIf="booking.discountPercentage === 0 && booking.discountAmount === 0">
+                      0
+                    </span>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>Subtotal</div>
+                  <div>
+                    <span>${{ formatToPrice(booking.subTotal) }}</span>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>Taxes (HST)</div>
+                  <div><span>${{ booking.tax }}</span></div>
+                </li>
+                <li class="list-group-item totalprice">
+                  <div>Total Balance Due</div>
+                  <div>${{ formatToPrice(booking.total) }}</div>
+                </li>
+              </ul>
+          </div>
+          <div class="list-services sign-container">
+              <ul class="list-group list-group-flush">
+                  <li class="list-group-item sign-border">
+                    <div>Funeral Director's signature</div>
+                  </li>
+                  <li class="list-group-item">
+                    <div>Purchaser’s signature</div>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4 agreement-text">
+          <div class="agreement-content">This is an agreement between you, the purchaser, and the funeral home concerning funeral services and supplies. By signing this agreement, you, the purchaser, are entering into a contract for the provision of funeral services and supplies.</div>
+          <div class="header-text">1. Purchaser’s Authority</div>
+          <div class="agreement-content">The purchaser represents that he/she is legally authorized or charged with the responsibility for the arrangements contained in this contract.</div>
+          <div class="header-text">2. Supplies, Services, and Costs</div>
+          <div class="agreement-content">The purchaser achnowledes being offered copies of the price lists. The funeral home agrees to supply goods and services according to the following table of fees and disbursements.</div>
+        </div>
+      </div>
+    </div>
+</div>

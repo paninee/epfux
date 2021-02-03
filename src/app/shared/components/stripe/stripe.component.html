@@ -1,0 +1,108 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="billing-modal"> {{ IDENTIFIER === 'createBooking' ? 'Enter Credit Card Information' : 'Add payment method' }} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+        </button>
+    </div>
+    <div *ngIf="isLoading">
+      <app-loading-anim IDENTIFIER="createBooking"></app-loading-anim>
+      <div class="loading-text">Processing...</div>
+    </div>
+    <div class="modal-body" [ngStyle]="{ 'visibility' : isLoading ? 'hidden' : 'visible' }">
+        <div class="form-container">
+            <form novalidate [formGroup]="paymentForm">
+                <div class="flex-row">
+                  <div class="alert" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+                      {{ alertMetaData.message }}
+                  </div>
+              </div>
+              <div class="flex-row" *ngIf="IDENTIFIER !== 'createBooking'">
+                <div class="contents_1">
+                    <div class="form-group">
+                        <label for="fullname">Full name</label>
+                        <small *ngIf="formErrors.fullname.message" class="float-right text-danger">{{ formErrors.fullname.message }}</small>
+                        <input type="text" class="form-control" id="fullname" formControlName="fullname">
+                      </div>
+                </div>
+              </div>
+              <div class="flex-row" *ngIf="IDENTIFIER === 'createBooking'">
+                  <div class="contents_1">
+                      <div class="form-group label-total-container">
+                          <label for="total">Total</label>
+                          <small *ngIf="formErrors.total.message" class="float-right text-danger">{{ formErrors.total.message }}</small>
+                      </div>
+                  </div>
+              </div>
+              <div class="flex-row" *ngIf="IDENTIFIER === 'createBooking'">
+                <div class="contents_1">
+                    <div class="form-group total-container">
+                        <div class="total-container-1">
+                          <input
+                            currencyMask
+                            [options]="{prefix: '$', align : 'left'}"
+                            type="text"
+                            class="form-control"
+                            id="total"
+                            formControlName="total"
+                            (click)="moveCursorToEnd($event)">
+                        </div>
+                        <div class="total-container-2 text-right">
+                          ${{ formatsNUm(remainingBalance) }} remaining
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="cardNumber">Card number</label>
+                    <div id="cardNumber" class="form-control"></div>
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="expiry">Expiry <span class="hinttext">(mm/yy)</span></label>
+                    <div id="cardExpiry" class="form-control"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-row">
+                <div class="contents_2">
+                  <div class="form-group">
+                    <label for="cvv">CVC</label>
+                    <div id="cardCvc" class="form-control"></div>
+                  </div>
+                </div>
+                <div class="contents_2 flex-end">
+                  <div class="form-group">
+                    <label for="zip_postal">ZIP/Postal code</label>
+                    <small *ngIf="formErrors.zip_postal.message" class="float-right text-danger">{{ formErrors.zip_postal.message }}</small>
+                    <input type="text" class="form-control" id="zip_postal" formControlName="zip_postal">
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="closemodal" class="btn btn-cancel-bg" data-dismiss="modal">Cancel</button>
+        <button 
+          type="button"
+          [ngClass]="isFormChanged ? 'btn btn-save' : 'btn btn-disabled'"
+          (click)="prepareFields()"
+          >
+          {{ IDENTIFIER === 'createBooking' ? chargeTotalPrice() : 'Add card' }} 
+        </button>
+      </div>
+</div>
+
+<notifier-container></notifier-container>
+
+<ng-template #customNotification let-notificationData="notification">
+  <div class="notier-container" type="notificationData.type">
+      <span><i class="fa fa-check"></i></span>
+      <p class="notifier__notification-message">{{notificationData.message}}</p>
+      <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+  </div>
+</ng-template>

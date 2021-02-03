@@ -1,0 +1,22 @@
+<ng-container *ngIf="source === 'booking'">
+    <!-- <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadImage($event)">
+        <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)" multiple>
+        <div class="action">
+            <button class="btn btn-upload">Add document</button>
+            <div class="upload_notes"><span>or drop a document here to upload</span></div>
+        </div>
+    </div> -->
+    <span><a class="edit" (click)="fileInput.click()">Upload</a></span>
+    <input (change)="uploadFile($event)" placeholder="Upload Image" hidden type="file" multiple #fileInput/>
+    <!-- <input #fileInput hidden type="file" #fileInput (change)="uploadFile($event.target.files)" multiple> -->
+</ng-container>
+
+<ng-container *ngIf="source === 'vendor'">
+    <div (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+        <input #fileInput hidden type="file" #fileInput (change)="uploadFile($event)"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+        <div class="action">
+            <button class="btn btn-cancel-bg">Import</button>
+        </div>
+    </div>
+</ng-container>

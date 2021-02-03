@@ -1,0 +1,905 @@
+<div class="modal-header">
+    <div class="icon-container" *ngIf="!listService" (click)="showServiceList()"><i class="fa fa-arrow-left" aria-hidden="true"></i></div>
+    <h5 class="modal-title" id="modal-basic-title">{{ selectedService }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="closeServices()">
+      <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+    </button>
+</div>
+
+<div class="modal-body">
+    <app-loading-anim *ngIf="isLoading"></app-loading-anim>
+    <div class="flex-content">
+      <div class="form-container service-modal">
+        <!-- show all service -->
+        <ul class="list-group" *ngIf="listService">
+          <li class="list-group-item" *ngFor="let service of serviceCategory" (click)="openServiceDetails(service.name,service._id)">
+            <div>{{service.name}}</div>
+            <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </li>
+          <li class="list-group-item" (click)="openServiceDetails('quickService',null)">
+              <div>Add a quick service</div>
+              <div><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+          </li>
+        </ul>
+        <!-- end show all service -->
+        
+        <!-- start arrangementService -->
+        <div class="flex-content modal-service" *ngIf="arrangementService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                  <div class="flex_row">
+                      <div class="contents_1">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="Adjudicator" 
+                              [(ngModel)]="arrangement.adjudicator.check"
+                              name="adjudicatorCheck"
+                              (ngModelChange)="onSelectService($event,'adjudicator','arrangement',0)">
+                              <label class="form-check-label" for="Adjudicator"></label>
+                              <span>Adjudicator</span>
+                            </div>
+                      </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="vendorName">Vendor name</label>
+                                <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="arrangement.adjudicator.vendor_name"
+                                  (ngModelChange)="search($event,'adjudicator');onChangedPrice($event,'adjudicator','arrangement',0);"
+                                  [ngModelOptions]="{standalone: true}"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'adjudicator'"
+                                  name="vendorName"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="arrangement"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                              </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}" 
+                                [(ngModel)]="arrangement.adjudicator.price"
+                                (ngModelChange)="onChangedPrice($event,'adjudicator','arrangement',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row-container">
+                    <div class="flex_row">
+                        <div class="contents_1">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="casketRental"
+                                  [(ngModel)]="arrangement.casket.check"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="onSelectService($event,'casket','arrangement',0)">
+                                <label class="form-check-label" for="casketRental"></label>
+                                <span>Casket Rental</span>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="flex-row">
+                          <div class="contents_8">
+                              <div class="form-group">
+                                  <label for="serviceName">Vendor (optional)</label>
+                                  <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="arrangement.casket.vendor_name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="search($event,'casket');onChangedPrice($event,'casket','arrangement',0)"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'casket'"
+                                  name="vendorName"
+                                  (ngModelChange)="search($event,'casket')"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="arrangement"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                                </div>
+                          </div>
+                          <div class="contents_8_2 flex-end">
+                              <div class="form-group">
+                                  <label for="price">Price</label>
+                                  <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                    [(ngModel)]="arrangement.casket.price"
+                                    (ngModelChange)="onChangedPrice($event,'casket','arrangement',0)"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (click)="moveCursorToEnd($event)"/>
+                              </div>
+                          </div>
+                      </div>
+                </div>
+
+                <div class="row-container">
+                        <div class="flex-row checkbox-row">
+                            <div class="contents_8">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="graveClothesCheck"
+                                      [(ngModel)]="arrangement.grave.check"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (ngModelChange)="onSelectService($event,'grave','arrangement',0)">
+                                    <label class="form-check-label" for="graveClothesCheck"></label>
+                                    <span>Grave clothes/shroud</span>
+                                  </div>
+                            </div>
+                            <div class="contents_8_2 flex-end">
+                                <div class="form-group">
+                                    <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                      [(ngModel)]="arrangement.grave.price"
+                                      (ngModelChange)="onChangedPrice($event,'grave','arrangement',0)"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (click)="moveCursorToEnd($event)"/>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="row-container">
+                      <div class="flex-row checkbox-row">
+                          <div class="contents_8">
+                              <div class="form-check">
+                                  <input type="checkbox" class="form-check-input" id="staffProffService"
+                                    [(ngModel)]="arrangement.staffProf.check"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="onSelectService($event,'staffProf','arrangement',0)"
+                                  >
+                                  <label class="form-check-label" for="staffProffService"></label>
+                                  <span>Staff and professional services</span>
+                                </div>
+                          </div>
+                          <div class="contents_8_2 flex-end">
+                              <div class="form-group">
+                                  <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                    [(ngModel)]="arrangement.staffProf.price"
+                                    (ngModelChange)="onChangedPrice($event,'staffProf','arrangement',0)"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (click)="moveCursorToEnd($event)"/>
+                              </div>
+                          </div>
+                      </div>
+                </div>
+
+                <div class="row-container">
+                    <div class="flex-row checkbox-row">
+                        <div class="contents_8">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="facilitiesCheck"
+                                  [(ngModel)]="arrangement.facilities.check"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="onSelectService($event,'facilities','arrangement',0)"
+                                >
+                                <label class="form-check-label" for="facilitiesCheck"></label>
+                                <span>Facilities</span>
+                              </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                  [(ngModel)]="arrangement.facilities.price"
+                                  (ngModelChange)="onChangedPrice($event,'facilities','arrangement',0)"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-container">
+                  <div class="flex-row checkbox-row">
+                      <div class="contents_8">
+                          <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="floralCheck"
+                                [(ngModel)]="arrangement.floral.check"
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="onSelectService($event,'floral','arrangement',0)"
+                              >
+                              <label class="form-check-label" for="floralCheck"></label>
+                              <span>Floral</span>
+                            </div>
+                      </div>
+                      <div class="contents_8_2 flex-end">
+                          <div class="form-group">
+                              <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="arrangement.floral.price"
+                                (ngModelChange)="onChangedPrice($event,'floral','arrangement',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="row-container">
+                <div class="flex-row checkbox-row">
+                    <div class="contents_8">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="prepareCheck"
+                              [(ngModel)]="arrangement.prepare.check"
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="onSelectService($event,'prepare','arrangement',0)"
+                            >
+                            <label class="form-check-label" for="prepareCheck"></label>
+                            <span>Prepare shelter remains</span>
+                          </div>
+                    </div>
+                    <div class="contents_8_2 flex-end">
+                        <div class="form-group">
+                            <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                              [(ngModel)]="arrangement.prepare.price"
+                              (ngModelChange)="onChangedPrice($event,'prepare','arrangement',0)"
+                              [ngModelOptions]="{standalone: true}"
+                              (click)="moveCursorToEnd($event)"/>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+              </form>
+            </div>
+        </div>
+        <!-- end arrangementService -->
+
+        <!-- start transportationService -->
+        <div class="flex-content modal-service" *ngIf="transportationService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                    <div class="flex_row">
+                      <div class="contents_1">
+                          <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="Vehicles"
+                              [(ngModel)]="transportation.vehicles.check"
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="onSelectService($event,'vehicles','transportation',0)"
+                              [ngModelOptions]="{standalone: true}"
+                              >
+                              <label class="form-check-label" for="Vehicles"></label>
+                              <span>Vehicles</span>
+                            </div>
+                      </div>
+                    </div>
+                    <div class="flex-row flex-row-left" *ngFor="let vehicles of vehicleServiceList; let i = index; trackBy: trackByFn;">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="serviceName">Vehicle (optional)</label>
+                                <ng-select 
+                                  [searchable]="false" 
+                                  [clearable]="false" 
+                                  labelForId="serviceName"
+                                  [(ngModel)]="vehicles.additionalInfo[0].value"
+                                  [ngModelOptions]="{standalone: true}">
+                                  <ng-option value="general duties">General duties</ng-option>
+                                  <ng-option value="coach">Coach</ng-option>
+                                  <ng-option value="hearse">Hearse</ng-option>
+                                  <ng-option value="limo">Limo</ng-option>
+                                  <ng-option value="car">Car</ng-option>
+                                  <ng-option value="police car">Police Car</ng-option>
+                                  <ng-option value="other">Other</ng-option>
+                                </ng-select>
+                              </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="vehicles.price"
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="onChangedPrice($event,'vehicles','transportation',0)"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="add-new-toogle">
+                          <div class="add-new-title" (click)="addVehicle()">
+                            <span><i class="fa fa-plus-circle" aria-hidden="true"></i> Add vehicle</span>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-container">
+                  <div class="flex-row checkbox-row">
+                      <div class="contents_7">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="transferOfDeceased"
+                            [(ngModel)]="transportation.transferOfDeceased.check"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onSelectService($event,'transferOfDeceased','transportation',0)"
+                            >
+                            <label class="form-check-label" for="transferOfDeceased"></label>
+                            <span>Transfer of deceased</span>
+                          </div>
+                      </div>
+                      <div class="contents_2 flex-end">
+                        <div class="form-group">
+                          <div class="group-container">
+                              <div class="flex-group">
+                                  <div class="input-group mb-3 padd-left">
+                                    <input type="text" class="form-control"
+                                    [(ngModel)]="transportation.transferOfDeceased.additionalInfo[0].value"
+                                    (ngModelChange)="onChangedPrice($event,'transferOfDeceased','transportation',0)"
+                                    [ngModelOptions]="{standalone: true}"
+                                    >
+                                    <div class="input-group-append">
+                                      <span class="input-group-text">{{home.unitOfMeasurement ? home.unitOfMeasurement : 'km'}}</span>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="flex-group">
+                                  <div class="form-group">
+                                      <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                      [(ngModel)]="transportation.transferOfDeceased.price"
+                                      [ngModelOptions]="{standalone: true}"
+                                      (ngModelChange)="onChangedPrice($event,'transferOfDeceased','transportation',0)"
+                                      (click)="moveCursorToEnd($event)"
+                                      (click)="moveCursorToEnd($event)"/>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <!-- end transportationService -->
+
+        <!-- start intermentService -->
+        <div class="flex-content modal-service" *ngIf="intermentService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                    <div class="flex_row">
+                      <div class="contents_1">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="Interment"
+                              [(ngModel)]="interment.interment.check"
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="onSelectService($event,'interment','interment',0)"
+                            >
+                            <label class="form-check-label" for="Interment"></label>
+                            <span>Interment</span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="contents_2">
+                            <div class="form-group">
+                              <label for="serviceDate">Burial date</label>
+                              <input type="text" class="form-control" 
+                                ngbDatepicker 
+                                #dateService="ngbDatepicker"
+                                (click)="dateService.toggle()"
+                                [(ngModel)]="interment.interment.burial_date"
+                                (ngModelChange)="onChangedPrice($event,'interment','interment',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                />
+                            </div>
+                          </div>
+                          <div class="contents_2 flex-end">
+                            <div class="form-group">
+                              <label for="serviceStartEnd">Burial time</label>
+                              <select name="" class="form-control custom-select"
+                                [(ngModel)]="interment.interment.burial_time"
+                                (ngModelChange)="onChangedPrice($event,'interment','interment',0)"
+                                [ngModelOptions]="{standalone: true}">
+                                  <option *ngFor="let i of timeStamp" value="{{i}}">
+                                    {{i}}
+                                  </option>
+                                </select>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                      <div class="contents_2">
+                          <div class="form-group">
+                            <label for="serviceDate">Plot owner</label>
+                            <input type="text" class="form-control"
+                            [(ngModel)]="interment.interment.plot_owner"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onChangedPrice($event,'interment','interment',0)"
+                            />
+                          </div>
+                        </div>
+                        <div class="contents_2 flex-end">
+                          <div class="form-group">
+                            <label for="serviceStartEnd">Plot number</label>
+                            <input type="text" class="form-control"
+                            [(ngModel)]="interment.interment.plot_number"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onChangedPrice($event,'interment','interment',0)"
+                            />
+                          </div>
+                        </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="vendorName">Vendor</label>
+                                  <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="interment.interment.vendor_name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="search($event,'interment');onChangedPrice($event,'interment','interment',0)"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'interment'"
+                                  name="vendorName"
+                                  (ngModelChange)="search($event,'interment')"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="interment"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                            </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="interment.interment.price"
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="onChangedPrice($event,'interment','interment',0)"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-container">
+                  <div class="flex_row">
+                    <div class="contents_1">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="Casket"
+                        [(ngModel)]="interment.casket.check"
+                        [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="onSelectService($event,'casket','interment',0)"
+                        >
+                        <label class="form-check-label" for="Casket"></label>
+                        <span>Casket</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-row flex-row-left">
+                      <div class="contents_8">
+                          <div class="form-group">
+                              <label for="vendorName">Vendor</label>
+                                  <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="interment.casket.vendor_name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="search($event,'casket');onChangedPrice($event,'casket','interment',0)"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'casket'"
+                                  name="vendorName"
+                                  (ngModelChange)="search($event,'casket');"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="casket"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                          </div>
+                      </div>
+                      <div class="contents_8_2 flex-end">
+                          <div class="form-group">
+                              <label for="price">Price</label>
+                              <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                              [(ngModel)]="interment.casket.price"
+                              (ngModelChange)="onChangedPrice($event,'casket','interment',0)"
+                              [ngModelOptions]="{standalone: true}"
+                              (click)="moveCursorToEnd($event)"/>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="row-container">
+                    <div class="flex-row">
+                        <div class="contents_8">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="data.name"
+                                [(ngModel)]="interment.gravesideService.check"
+                                [ngModelOptions]="{standalone: true}"
+                                (ngModelChange)="onSelectService($event,'gravesideService','interment',0)"
+                                >
+                                <label class="form-check-label" for="data.name"></label>
+                                <span>Graveside service</span>
+                              </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="interment.gravesideService.price"
+                                (ngModelChange)="onChangedPrice($event,'gravesideService','interment',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <!-- end intermentService -->
+
+        <!-- start cremationService -->
+        <div class="flex-content modal-service" *ngIf="cremationService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                    <div class="flex_row">
+                      <div class="contents_1">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="Cremation"
+                            [(ngModel)]="cremation.cremation.check"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onSelectService($event,'cremation','cremation',0)"
+                            >
+                            <label class="form-check-label" for="Cremation"></label>
+                            <span>Cremation</span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="serviceStartEnd">Vendor (optional)</label>
+                                <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="cremation.cremation.vendor_name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="search($event,'cremation');onChangedPrice($event,'cremation','cremation',0)"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'cremation'"
+                                  name="vendorName"
+                                  (ngModelChange)="search($event,'cremation')"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="cremation"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                            </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="cremation.cremation.price"
+                                (ngModelChange)="onChangedPrice($event,'cremation','cremation',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-container">
+                    <div class="flex-row checkbox-row">
+                        <div class="contents_8">
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="data.name"
+                              [(ngModel)]="cremation.urn.check"
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="onSelectService($event,'urn','cremation',0)"
+                              >
+                              <label class="form-check-label" for="data.name"></label>
+                              <span>Urn</span>
+                            </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="cremation.urn.price"
+                                (ngModelChange)="onChangedPrice($event,'urn','cremation',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <!-- end cremationService -->
+
+        <!-- start embalmingService -->
+        <div class="flex-content modal-service" *ngIf="embalmingService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                    <div class="flex_row">
+                      <div class="contents_1">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="Embalming"
+                            [(ngModel)]="embalming.embalming.check"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onSelectService($event,'embalming','embalming',0)"
+                            >
+                            <label class="form-check-label" for="Embalming"></label>
+                            <span>Embalming</span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="serviceStartEnd">Vendor (optional)</label>
+                                <input  
+                                  type="text" 
+                                  class="form-control"
+                                  placeholder="Vendor name"
+                                  [(ngModel)]="embalming.embalming.vendor_name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="search($event,'embalming');onChangedPrice($event,'embalming','embalming',0)"
+                                  >
+                                <app-autocomplete
+                                  *ngIf="showAutoComplete && this.identifier === 'embalming'"
+                                  name="vendorName"
+                                  (ngModelChange)="search($event,'embalming')"
+                                  (vendorName)="populateVendorName($event)"
+                                  (showAutoComplete)="populateShowAutoComplete($event)"
+                                  [vendorsList]="vendorsList"
+                                  id="embalming"
+                                  [identifier]="identifier"
+                                ></app-autocomplete>
+                            </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="embalming.embalming.price"
+                                (ngModelChange)="onChangedPrice($event,'embalming','embalming',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <!-- end embalmingService -->
+
+        <!-- start otherService -->
+        <div class="flex-content modal-service" *ngIf="otherService">
+            <div class="form-container">
+              <form>
+                <div class="row-container" *ngFor="let service of serviceList;let i = index;">
+                  <div class="flex-row">
+                      <div class="contents_8">
+                          <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="{{service.name}}"
+                              [(ngModel)]="service.check"
+                              [ngModelOptions]="{standalone: true}"
+                              (ngModelChange)="onSelectService($event,'yourservice','yourservice',i)"
+                              >
+                              <label class="form-check-label" for="{{service.name}}"></label>
+                              <span>{{service.name}}</span>
+                            </div>
+                      </div>
+                      <div class="contents_8_2 flex-end">
+                          <div class="form-group">
+                              <input 
+                                currencyMask class="form-control" 
+                                [options]="{prefix: '$'}" 
+                                value="${{service.price}}"
+                                [(ngModel)]="service.price"
+                                (ngModelChange)="onChangedPrice($event,'yourservice','yourservice', i)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="row-container">
+                    <div class="flex_row">
+                        <div class="contents_1">
+                            <div class="text-center">
+                                <span class="text-color">
+                                    Add custom services in the <a class="span-link" routerLink="/services" (click)="closeServices()">Services</a> section
+                                  </span>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+              </form>
+            </div>
+        </div>
+        <!-- end otherService -->
+
+         <!-- start quickService -->
+         <div class="flex-content modal-service" *ngIf="quickService">
+            <div class="form-container">
+              <form>
+                <div class="row-container">
+                    <div class="flex_row">
+                      <div class="contents_1">
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="quickService"
+                            [(ngModel)]="quick_service.quick_service.check"
+                            [ngModelOptions]="{standalone: true}"
+                            (ngModelChange)="onSelectService($event,'quick_service','quick_service',0);"
+                            >
+                            <label class="form-check-label" for="quickService"></label>
+                            <span>Quick service</span>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="flex-row flex-row-left">
+                        <div class="contents_8">
+                            <div class="form-group">
+                                <label for="serviceName">Service name</label>
+                                <input type="text" class="form-control"
+                                  [(ngModel)]="quick_service.quick_service.name"
+                                  [ngModelOptions]="{standalone: true}"
+                                  (ngModelChange)="onChangedPrice($event,'quick_service','quick_service',0)"
+                                  >
+                            </div>
+                        </div>
+                        <div class="contents_8_2 flex-end">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input currencyMask class="form-control" [options]="{prefix: '$'}"
+                                [(ngModel)]="quick_service.quick_service.price"
+                                (ngModelChange)="onChangedPrice($event,'quick_service','quick_service',0)"
+                                [ngModelOptions]="{standalone: true}"
+                                (click)="moveCursorToEnd($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        <!-- end quickService -->
+
+      </div>
+  </div>
+</div>
+<div class="modal-footer">
+    <div class="flex-start flex-footer">
+
+      <ng-container *ngIf="selectedService === 'Arrangement'">
+        <div *ngIf="getDataByIdentifier('arrangement').length <= 0">
+          <span class="text-color">
+            No services selected
+          </span>
+        </div>
+        <div *ngIf="getDataByIdentifier('arrangement').length > 0">
+            <span class="text-color-red">
+                {{ getDataByIdentifier('arrangement').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('arrangement')) }}
+            </span>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedService === 'Transportation'">
+          <div *ngIf="getDataByIdentifier('transportation').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('transportation').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('transportation').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('transportation')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedService === 'Interment'">
+          <div *ngIf="getDataByIdentifier('interment').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('interment').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('interment').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('interment')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedService === 'Cremation'">
+          <div *ngIf="getDataByIdentifier('cremation').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('cremation').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('cremation').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('cremation')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="selectedService === 'Embalming'">
+          <div *ngIf="getDataByIdentifier('embalming').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('embalming').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('embalming').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('embalming')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="otherService">
+          <div *ngIf="getDataByIdentifier('yourservice').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('yourservice').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('yourservice').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('yourservice')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="quickService">
+          <div *ngIf="getDataByIdentifier('quick_service').length <= 0">
+            <span class="text-color">
+              No services selected
+            </span>
+          </div>
+          <div *ngIf="getDataByIdentifier('quick_service').length > 0">
+              <span class="text-color-red">
+                  {{ getDataByIdentifier('quick_service').length }} service selected - ${{ formatNumber(getDataPriceByIdentifier('quick_service')) }}
+              </span>
+          </div>
+      </ng-container>
+
+      <ng-container *ngIf="listService">
+        <div *ngIf="getSelectedService().length <= 0">
+          <span class="text-color">
+            No services selected
+          </span>
+        </div>
+        <div *ngIf="getSelectedService().length > 0">
+            <span class="text-color-red">
+                {{ getSelectedService().length }} service selected - $ {{ formatNumber(getServicePrice()) }}
+            </span>
+        </div>
+      </ng-container>
+
+    </div>
+    <div class="flex-end flex-footer">
+      <button type="button" class="btn btn-save" (click)="addInvoice()">Add to invoice</button>
+    </div>
+  </div>
+
+  <notifier-container></notifier-container>
+  <ng-template #customNotification let-notificationData="notification">
+  <div class="notier-container" type="notificationData.type">
+      <span><i class="fa fa-check"></i></span>
+      <p class="notifier__notification-message">{{notificationData.message}}</p>
+      <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+  </div>
+  </ng-template>

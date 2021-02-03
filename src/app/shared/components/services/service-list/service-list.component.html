@@ -1,0 +1,330 @@
+ <!-- list of service -->
+ <ng-container>
+
+
+  <!-- if has data in update booking -->
+
+  <div *ngIf="updateServiceList.length > 0;">
+      <div class="flex-row" *ngFor="let service of updateServiceList;let i = index;trackBy:trackByFn;">
+          <div class="content_1" *ngIf="service.name">
+          <div class="service-selected">
+              <div class="service-selected-flex service-selected-name">                      
+                  <ng-container *ngIf="service.name !== 'Vehicles'">
+                      <div class="service_name"><span>{{service.name}}</span></div>
+                      <div class="vendor_name"><span>{{ service.vendor ? service.vendor.name : '' }}</span></div>
+                  </ng-container>
+                  <ng-container *ngIf="service.name === 'Vehicles'">
+                      <div class="service_name"><span>{{service.name}}</span></div>
+                      <div class="vendor_name" *ngIf="service.name === 'Vehicles'"><span>{{ service.additionalInfo ? service.additionalInfo[0].value : '' }}</span></div>
+                  </ng-container>
+                  <ng-container *ngIf="service.name === 'Transfer of deceased'">
+                      <div class="vendor_name" *ngIf="service.name === 'Transfer of deceased'"><span>{{ service.additionalInfo ? service.additionalInfo[0].value : '0' }} km</span></div>
+                  </ng-container>
+              </div>
+                <div class="service-selected-flex price-selected">
+                  <span>${{formatNumber(service.price)}}</span>
+                </div>
+                <div class="service-selected-flex remove-selected" (click)="removeService(i,'updateBooking')">
+                  <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+   <!-- end of if has data in update booking -->
+
+
+  <!-- start arrangement -->
+  <div *ngIf="arrangementService.length > 0;">
+    <div class="flex-row" *ngFor="let service of arrangementService;let i = index; trackBy: trackByFn;">
+        <div class="content_1">
+        <div class="service-selected">
+            <div class="service-selected-flex service-selected-name">                      
+                <div class="service_name"><span>{{service.name}}</span></div>
+                <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+            </div>
+              <div class="service-selected-flex price-selected">
+                <span>${{formatNumber(service.price)}}</span>
+              </div>
+              <div class="service-selected-flex remove-selected" (click)="removeService(i,'arrangement')">
+                <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- end arrangement -->
+
+  <!-- start transportation -->
+
+  <div *ngIf="transportationService.length > 0;">
+    <div class="flex-row" *ngFor="let service of transportationService; let i = index;trackBy: trackByFn;">
+      <div class="content_1">
+        <div class="service-selected">
+          <div class="service-selected-flex service-selected-name">                      
+            <div class="service_name"><span>{{service.name}}</span></div>
+            <div class="vendor_name" *ngIf="service.name === 'Vehicles'"><span>{{ service.additionalInfo ? service.additionalInfo[0].value : '' }}</span></div>
+            <div class="vendor_name" *ngIf="service.name === 'Transfer of deceased'"><span>{{ service.additionalInfo ? service.additionalInfo[0].value : '0' }} km</span></div>
+          </div>
+          <div class="service-selected-flex price-selected">
+            <span>${{formatNumber(service.price)}}</span>
+          </div>
+          <div class="service-selected-flex remove-selected" (click)="removeService(i,'transportation')">
+            <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- start transportation -->
+
+  <!-- start interment -->
+
+  <div *ngIf="intermentService.length > 0;">
+    <div class="flex-row" *ngFor="let service of intermentService; let i = index;trackBy: trackByFn;">
+        <div class="content_1">
+        <div class="service-selected">
+            <div class="service-selected-flex service-selected-name">                      
+                <div class="service_name"><span>{{service.name}}</span></div>
+                <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+                <div class="burial_date" *ngIf="service.name === 'Interment' && service.additionalInfo[0].value"><span>Burial date: {{service.additionalInfo[0].value | date: 'medium' }}</span></div>
+                <div class="plot_num" *ngIf="service.name === 'Interment' && service.plot_number.length > 0"><span>Plot #{{service.plot_number}} plot owner: {{service.plot_owner}}</span></div>
+            </div>
+              <div class="service-selected-flex price-selected">
+                <span>${{formatNumber(service.price)}}</span>
+              </div>
+              <div class="service-selected-flex remove-selected" (click)="removeService(i,'interment')">
+                <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- end interment -->
+
+  <!-- start cremation -->
+
+  <div *ngIf="cremationService.length > 0;">
+      <div class="flex-row" *ngFor="let service of cremationService; let i = index;trackBy: trackByFn;">
+          <div class="content_1">
+          <div class="service-selected">
+              <div class="service-selected-flex service-selected-name">                      
+                  <div class="service_name"><span>{{service.name}}</span></div>
+                  <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+              </div>
+                <div class="service-selected-flex price-selected">
+                  <span>${{formatNumber(service.price)}}</span>
+                </div>
+                <div class="service-selected-flex remove-selected" (click)="removeService(i,'cremation')">
+                  <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- end cremation -->
+
+  <!-- start embalming -->
+
+  <div *ngIf="embalmingService.length > 0;">
+    <div class="flex-row" *ngFor="let service of embalmingService;let i = index;trackBy: trackByFn;">
+        <div class="content_1">
+        <div class="service-selected">
+            <div class="service-selected-flex service-selected-name">                      
+                <div class="service_name"><span>{{service.name}}</span></div>
+                <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+            </div>
+              <div class="service-selected-flex price-selected">
+                <span>${{formatNumber(service.price)}}</span>
+              </div>
+              <div class="service-selected-flex remove-selected" (click)="removeService(i,'embalming')">
+                <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- end embalming -->
+
+  <!-- start yourservice -->
+
+  <div *ngIf="yourservice.length > 0;">
+    <div class="flex-row" *ngFor="let service of yourservice; let i = index;trackBy: trackByFn;">
+        <div class="content_1">
+        <div class="service-selected">
+            <div class="service-selected-flex service-selected-name">                      
+                <div class="service_name"><span>{{service.name}}</span></div>
+                <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+            </div>
+              <div class="service-selected-flex price-selected">
+                <span>${{formatNumber(service.price)}}</span>
+              </div>
+              <div class="service-selected-flex remove-selected" (click)="removeService(i,'yourservice')">
+                  <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- end yourservice -->
+
+   <!-- start quick service -->
+
+   <div *ngIf="quickService.length > 0;">
+    <div class="flex-row" *ngFor="let service of quickService;let i = index;trackBy: trackByFn;">
+        <div class="content_1">
+        <div class="service-selected">
+            <div class="service-selected-flex service-selected-name">                      
+                <div class="service_name"><span>{{service.name}}</span></div>
+                <div class="vendor_name"><span>{{ service.vendor ? service.vendor_name : '' }}</span></div>
+            </div>
+              <div class="service-selected-flex price-selected">
+                <span>${{formatNumber(service.price)}}</span>
+              </div>
+              <div class="service-selected-flex remove-selected" (click)="removeService(i,'quick_service')">
+                  <img class="img-fluid close-icon" src="/assets/images/close.png" alt="">
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <!-- end quick service -->
+
+  
+  <!-- <div class="flex-row" *ngIf="validateIfHasData() || updateServiceList.length > 0"> -->
+  <div class="flex-row">
+    <div class="checkout-section">
+      <div class="col-md-7 offset-md-5">
+        <div class="checkout-container">
+          <div class="checkout">
+            <div class="flex-checkout-title">Discount</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right discount-text' : 'flex-checkout text-right discount-text discount-disable'" 
+                *ngIf="discountAmount <= 0 && discountPercentage <= 0"
+                (click)="setShowDiscount(true)">
+                <span>Add discount</span>  
+              </div>
+            <div class="flex-checkout text-right discount-text" *ngIf="discountAmount > 0 || discountPercentage > 0" (click)="setShowDiscount(true)">
+              <span *ngIf="discount === '$'">${{ formatsNUm(discountAmount) }}</span>  
+              <span *ngIf="discount === '%'">{{ formatsNUm(discountPercentage) }}%</span>  
+            </div>
+            <div class="discount-container" *ngIf="showDiscount">
+              <div class="form-container">
+                <div class="content-header add-padd">
+                  <div class="header-title"><span>Add discount</span></div>
+                  <div class="header-title-img"><img class="img-fluid close-icon" src="/assets/images/close.png" alt="" (click)="setShowDiscount(false)"></div>
+                </div>
+                <div class="flex-row">
+                  <div class="content_1">
+                    <div class="form-group">
+                      <label for="notes">Discount</label>
+                    </div>
+                    <div class="form-group discount-group">
+                      <div class="discount-flex-1">
+                        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" 
+                        [(ngModel)]="discount"
+                        [ngModelOptions]="{standalone: true}"
+                        >
+                        <label ngbButtonLabel class="btn">
+                          <input ngbButton type="radio" value="$"> $
+                        </label>
+                        <label ngbButtonLabel class="btn">
+                          <input ngbButton type="radio" value="%"> %
+                        </label>
+                      </div>
+                      </div>
+                      <div class="discount-flex-2" *ngIf="discount === '$'">
+                        <input
+                        type="text" 
+                        class="form-control" 
+                        id="discountAmount"
+                        currencyMask
+                        [options]="{prefix: '$', align : 'left'}"
+                        [(ngModel)]="discountAmountFields"
+                        [ngModelOptions]="{standalone: true}"
+                        (ngModelChange)="onChangedDiscount($event)"
+                        (click)="moveCursorToEnd($event)">
+                      </div>
+                      <div class="discount-flex-2" *ngIf="discount === '%'">
+                          <input
+                          type="text" 
+                          class="form-control" 
+                          id="discountPercentage"
+                          currencyMask
+                          [options]="{suffix: '',prefix : '', precision : 0, align : 'left'}"
+                          [(ngModel)]="discountPercentageFields"
+                          [ngModelOptions]="{standalone: true}"
+                          (ngModelChange)="onChangedDiscount($event)"
+                          (click)="moveCursorToEnd($event)">
+                        </div>
+                        <div class="discount-flex-3" *ngIf="discount === '%'">
+                            %
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="notes">Reason</label>
+                      <input type="text" class="form-control" id="discountReason"
+                      [(ngModel)]="discountReason"
+                      [ngModelOptions]="{standalone: true}"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="flex-row">
+                    <div class="discount-footer">
+                        <div class="flex-footer-container">
+                            <button type="button" class="btn btn-cancel-bg" (click)="setShowDiscount(false)">Cancel</button>
+                            <button type="button" 
+                              [ngClass]="isDisabled() ? 'btn btn-save' : 'btn btn-disabled'" 
+                              (click)="addDiscount()">
+                                Apply
+                            </button>
+                          </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="checkout">
+            <div [ngClass]="discountDisabled() ? 'flex-checkout-title' : 'flex-checkout-title discount-disable'">Subtotal</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right' : 'flex-checkout text-right discount-disable'">${{ calculateDiscount ? formatsNUm(calculateDiscount.subTotal) : 0}}</div>
+          </div>
+          <div class="checkout">
+            <div [ngClass]="discountDisabled() ? 'flex-checkout-title' : 'flex-checkout-title discount-disable'">Taxes</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right' : 'flex-checkout text-right discount-disable'">${{ calculateDiscount ? formatsNUm(calculateDiscount.tax) : 0}}</div>
+          </div>
+          <div class="checkout">
+            <div [ngClass]="discountDisabled() ? 'flex-checkout-title' : 'flex-checkout-title discount-disable'">Total</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right' : 'flex-checkout text-right discount-disable'">${{ calculateDiscount ? formatsNUm(calculateDiscount.total) : 0}}</div>
+          </div>
+          <div class="checkout" *ngIf="creditCardNum">
+            <div [ngClass]="discountDisabled() ? 'flex-checkout-title' : 'flex-checkout-title discount-disable'">Credit card ending in {{creditCardNum}}</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right' : 'flex-checkout text-right discount-disable'"><span class="check-box"><i class="fa fa-check-circle"></i></span>${{ paidAmount ? formatsNUm(paidAmount) : 0}}</div>
+          </div>
+          <div class="checkout">
+            <div [ngClass]="discountDisabled() ? 'flex-checkout-title' : 'flex-checkout-title discount-disable'">Remaining</div>
+            <div [ngClass]="discountDisabled() ? 'flex-checkout text-right' : 'flex-checkout text-right discount-disable'">${{ remainingAmount ? formatsNUm(remainingAmount) : 0}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</ng-container>
+
+<notifier-container></notifier-container>
+<ng-template #customNotification let-notificationData="notification">
+  <div class="notier-container" type="notificationData.type">
+      <span><i class="fa fa-check"></i></span>
+      <p class="notifier__notification-message">{{notificationData.message}}</p>
+      <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+  </div>
+</ng-template>
+<!-- end list of service -->

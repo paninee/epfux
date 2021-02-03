@@ -1,0 +1,27 @@
+@import '../../../styles/lib.less';
+
+.account-details {
+ .flex-header{
+  .flex-header();
+   .flex{
+    display:flex;
+    &:nth-child(1){
+      flex-direction: column;
+    }
+    .page-title{
+      font-size: 1.8rem;
+    }
+   }
+ }
+
+ .flex-content{
+  .flex-content(100%);
+  .form-container{
+    padding: 2%;
+    .form-container(90%,3px);
+  }
+ }
+}
+.padd-top{
+  margin-bottom: 0.5rem;
+}

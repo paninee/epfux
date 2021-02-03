@@ -1,0 +1,13 @@
+<!-- <input 
+  type="text"
+  class="form-control"
+  placeholder="Vendor name"
+  [(ngModel)]="test"
+  (ngModelChange)="search($event)"
+  [ngModelOptions]="{standalone: true}"
+  > -->
+  <ul class="list-unstyled" *ngIf="vendorsList.length > 0">
+      <li *ngFor="let vendor of vendorsList" (click)="selectVendor(vendor)">
+        {{vendor.name}}
+      </li>
+  </ul>

@@ -1,0 +1,142 @@
+
+@import '../../../../styles/lib.less';
+
+@span-space: 2rem;
+
+#sidebar-wrapper {
+  min-height: 100%;
+  height:100vh;
+  margin-left: -15rem;
+  width: 260px;
+  background: @main-color !important;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  .sidebar-heading {
+    padding: 1.25rem 1.25rem;
+    font-size: 1.2rem;
+    background-color: @main-button-color;
+    color:#fff;
+    height: 60px;
+    img {
+      width: 80px;
+    }
+  }
+
+  .list-group {
+    &.disable-payment > * {
+      pointer-events: none;
+    }
+    .list-group-item{
+      background-color:transparent !important;
+      color:#fff;
+      border: none !important;
+      .setting-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_settings.svg);
+        }
+      }
+      .account-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_accounts.svg);
+        }
+      }
+      .home-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_home.svg);
+        }
+      }
+      .booking-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_bookings.svg);
+        }
+      }
+      .calendar-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_calendar.svg);
+        }
+      }
+      .services-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_services.svg);
+        }
+      }
+      .vendors-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_vendors.svg);
+        }
+      }
+      .reporting-icon{
+        padding-right: @span-space;
+        &:before{
+          .mask-style();
+          background-image: url(/assets/images/icons/icon_reporting.svg);
+        }
+      }
+      .badge-menu{
+        margin-left: 10px;
+        border-radius: 50px;
+        background: @menu-color-hover;
+        font-weight: 400;
+        padding-right: 10px;
+        font-size: 11px;
+        padding-top: 4px;
+        text-transform: uppercase;
+      }
+      &:nth-child(1){
+        margin-top:10%;
+      }
+      &:hover{
+        background: @menu-color-hover !important;
+        .icon:before{
+          filter: brightness(0) invert(1);
+          top: 12px;
+        }
+      }
+      &.active{
+        background: @menu-color-hover !important;
+        .icon:before{
+          filter: brightness(0) invert(1);
+          top: 12px;
+        }
+      }
+    }
+  }
+  .menu-bottom{
+    bottom: 0;
+    position: absolute;
+    width:100%;
+  }
+}
+
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}

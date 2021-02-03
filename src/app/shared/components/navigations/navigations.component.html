@@ -1,0 +1,43 @@
+<div class="bg-light border-right" id="sidebar-wrapper">
+  <div class="sidebar-heading">
+    <img src="/assets/images/logo.png" class="img-fluid"/>
+  </div>
+  <div [ngClass]="payment ? 'list-group list-group-flush' : 'list-group list-group-flush disable-payment'">
+    <a href="javaScript:void(0);" [routerLinkActive]="['active']" class="list-group-item list-group-item-action bg-light">
+      <span class="home-icon icon"></span>
+      <span>Home</span>
+      <span class="badge badge-primary badge-menu">coming soon!</span>
+    </a>
+    <a [routerLink]="!isDirty ? '/bookings' : []" (click)="exitClick('bookings')" [routerLinkActive]="currentRoutes === '/bookings' ? 'active' : ''" class="list-group-item list-group-item-action bg-light">
+      <span class="booking-icon icon"></span>
+      <span>Booking</span>
+    </a>
+    <a [routerLink]="!isDirty ? '/calendar' : []" (click)="exitClick('calendar')" [routerLinkActive]="currentRoutes === '/calendar' ? 'active' : ''"  class="list-group-item list-group-item-action bg-light">
+      <span class="calendar-icon icon"></span>
+      <span>Calendar</span>
+    </a>
+    <a routerLink="/services" (click)="exitClick('services')" [routerLinkActive]="['active']" class="list-group-item list-group-item-action bg-light">
+      <span class="services-icon icon"></span>
+      <span>Services</span>
+    </a>
+    <a [routerLink]="!isDirty ? '/vendors' : []"  (click)="exitClick('vendors')" [routerLinkActive]="currentRoutes === '/vendors' ? 'active' : ''" class="list-group-item list-group-item-action bg-light">
+      <span class="vendors-icon icon"></span>
+      <span>Vendors</span>
+    </a>
+    <a href="javaScript:void(0);" class="list-group-item list-group-item-action bg-light">
+      <span class="reporting-icon icon"></span>
+      <span>Reports</span>
+      <span class="badge badge-primary badge-menu">coming soon!</span>
+    </a>
+  </div>
+  <div class="list-group list-group-flush menu-bottom" *ngIf="role === 'owner'">
+      <a [routerLink]="!isDirty ? '/settings' : []"  (click)="exitClick('settings')" [routerLinkActive]="currentRoutes === '/settings' ? 'active' : ''" class="list-group-item list-group-item-action bg-light">
+        <span class="setting-icon icon"></span>
+        <span>Setting</span>
+    </a>
+      <a [routerLink]="!isDirty ? '/accounts' : []" (click)="exitClick('accounts')" [routerLinkActive]="currentRoutes === '/accounts' ? 'active' : ''" class="list-group-item list-group-item-action bg-light">
+        <span class="account-icon icon"></span>
+        <span>Account</span>
+      </a>
+    </div>
+</div>

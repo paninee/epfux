@@ -1,0 +1,56 @@
+@import '../../../styles/lib.less';
+.booking-obituary {
+  margin: 5%;
+  .pdf-container{
+    .form-container(100%,3px);
+    .flex-container{
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 60%;
+      max-width: 600px;
+      margin: 0 auto;
+      @media print {
+        width:100%;
+      }
+      .padding-space(5%,5%);
+      .image-container-flex{
+        width: 50%;
+        img{
+          border-radius: 5px;
+        }
+      }
+      .fontTitle{
+        font-size:1.2rem;
+      }
+      .fontName{
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      .service-details{
+        .padding-space(5%,5%);
+      }
+      .eulogy-text{
+        p{
+          word-wrap: break-word;
+          display: inline-block;
+          max-width: 600px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          vertical-align: top;
+          @media print {
+            word-wrap: break-word;
+            display: inline-block;
+            max-width: 600px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: top;
+          }
+        }
+      }
+    }
+  }
+}

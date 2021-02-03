@@ -1,0 +1,287 @@
+<div class="settings-billing">
+  <div class="flex-header">
+    <div class="flex">
+        <div class="flex-title">
+            <h5 class="page-title">Settings</h5>
+        </div>
+    </div>
+    <div class="flex">
+      <button type="button" (click)="exitClick()" class="btn btn-cancel-bg">Cancel</button>
+      <button type="button" class="btn btn-save" (click)="prepareFields()">Save</button>
+    </div>
+</div>
+
+<div class="flex-content">
+  <div class="content-container">
+    <ng-container *ngIf="payment; else newMethod">
+        <div class="content-header">
+            <h4>Billing</h4>
+         </div>
+         <div class="content">
+            <div class="content-title">
+                <p class="text-left">
+                  This payment method will cover the monthly subscription of Epilog Software
+                </p>
+            </div>
+           <div class="content-card">
+              <div class="content-img">
+                  <img class="img-fluid" src="/assets/images/payments/{{ payment ? payment.type.toLowerCase() : '' }}.svg" />
+              </div>
+              <div class="content-card-details">
+                  <div class="content-card-details-info">
+                      <div><span>{{ payment ? payment.type : '' }}</span></div>
+                      <div><span class="bull-class">&bull;&bull;&bull;&bull;</span><span>{{payment.last4 || ''}}</span></div>
+                  </div>
+                  <div class="content-card-details-exp">
+                      <div><span>Expiration: {{payment.expiration}}</span></div>
+                  </div>
+              </div>
+           </div>
+         </div>
+         <div class="content-footer">
+            <div class="footer-flex">
+                <button type="button" class="btn btn-cancel-bg" (click)="openCancelSubscriptionModal(content)">Cancel subscription</button>
+                <button type="button" class="btn btn-cancel-bg" routerLink="/bookings">View billing history</button>
+                <button type="button" class="btn btn-save" data-toggle="modal" data-target="#billing-modal">Change payment method</button>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #newMethod>
+        <div class="content-header">
+            <h4>Billing</h4>
+         </div>
+         <div class="content">
+           <p class="text-left">
+             Add a payment method using our secure payment system. This payment method will cover the monthly subscription of Epilog Software.
+           </p>
+         </div>
+         <div class="content-footer">
+            <div class="footer-flex">
+              <button type="button" class="btn btn-save" data-toggle="modal" data-target="#billing-modal">Add a payment method</button>
+            </div>
+        </div>
+    </ng-template>
+
+  </div>
+</div>
+
+<div class="flex-content">
+  <div class="content-container">
+     <div class="content-header">
+        <h4>Bank account payout</h4>
+     </div>
+
+     <div class="content" [ngClass]="{'content-bank-details': payout}">
+       <p class="text-left">
+         When you receive a payment from a booking, we call that payment to you a "payout".
+         Set up a bank account that you would like these funds to be transfered to get to.
+         Get paid in 5-7 business days. Weekend and holiday may extend procesing time. No fees.
+       </p>
+     </div>
+
+     <ng-container *ngIf="home?.payout; else newBillingMethod">
+       <div class="content">
+         <div class="content-card">
+            <div class="content-img">
+                <span>
+                  <i class="fa fa-university fa-3x"></i>
+                </span>
+            </div>
+            <div class="content-card-details">
+                <div class="content-card-details-info">
+                    <div><span>{{ home.payout ? home.payout.bank : '' }}</span></div>
+                    <div>
+                      <span class="bull-class">&bull;&bull;&bull;&bull;</span>
+                      <span>{{home.payout ? home.payout.last4 : ''}}</span>
+                      <span> ({{ home.payout ? home.payout.currency : ''  }}) </span>
+                    </div>
+                </div>
+                <div class="content-card-details-exp">
+                    <div><span>{{ home.payout ? home.payout.name : ''}}</span></div>
+                </div>
+            </div>
+         </div>
+       </div>
+       <div class="content-footer">
+          <div class="footer-flex">
+              <button type="button" class="btn btn-cancel-bg">View booking history</button>
+              <button type="button" class="btn btn-save" (click)="payOut()">Change bank account</button>
+          </div>
+      </div>
+  </ng-container>
+
+    <ng-template #newBillingMethod>
+      <div class="content-footer">
+        <div class="footer-flex">
+          <button type="button" class="btn btn-save" (click)="payOut()" >Add a bank account</button>
+        </div>
+    </div>
+    </ng-template>
+  </div>
+</div>
+
+<div class="flex-content">
+  <div class="content-container">
+     <div class="content-header">
+        <h4>Location</h4>
+     </div>
+     <div class="form-container">
+        <div class="alert text-center" [ngClass]="alertMetaData.class" role="alert" *ngIf="alertMetaData.showAlert">
+            {{ alertMetaData.message }}
+          </div>
+      <form [formGroup]="form">
+          <div class="flex-row">
+            <div class="contents_2">
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <small *ngIf="formErrors.address.message" class="form-text text-danger">{{ formErrors.address.message }}</small>
+                    <input type="text" class="form-control" id="address" formControlName="address">
+                  </div>
+            </div>
+            <div class="contents_2 flex-end">
+                <div class="form-group">
+                    <label for="unitNo">Apt./Unit No. <span class="hinttext">(optional)</span></label>
+                    <small *ngIf="formErrors.unitNo.message" class="form-text text-danger">{{ formErrors.unitNo.message }}</small>
+                    <input type="text" class="form-control" id="unitNo" formControlName="unitNo">
+                </div>
+            </div>
+          </div>
+
+          <div class="flex-row">
+            <div class="contents_2">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <small *ngIf="formErrors.city.message" class="form-text text-danger">{{ formErrors.city.message }}</small>
+                    <input type="text" class="form-control" id="city" formControlName="city">
+                  </div>
+            </div>
+            <div class="contents_2 flex-end">
+                <div class="form-group">
+                    <label for="province">Province/State </label>
+                    <small *ngIf="formErrors.province.message" class="form-text text-danger">{{ formErrors.province.message }}</small>
+                    <input type="text" class="form-control" id="province" formControlName="province">
+                </div>
+            </div>
+          </div>
+
+          <div class="flex-row">
+            <div class="contents_2">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <small *ngIf="formErrors.country.message" class="form-text text-danger">{{ formErrors.country.message }}</small>
+                    <input type="text" class="form-control" id="country" formControlName="country">
+                  </div>
+            </div>
+            <div class="contents_2 flex-end">
+                <div class="form-group">
+                    <label for="postalCode">Zip/Postal </label>
+                    <small *ngIf="formErrors.postalCode.message" class="form-text text-danger">{{ formErrors.postalCode.message }}</small>
+                    <input type="text" class="form-control" id="postalCode" formControlName="postalCode">
+                </div>
+            </div>
+          </div>
+
+          <div class="flex-row">
+            <div class="contents_2">
+                <div class="form-group">
+                    <label for="phoneNo">Phone</label>
+                    <small *ngIf="formErrors.phoneNo.message" class="form-text text-danger">{{ formErrors.phoneNo.message }}</small>
+                    <input type="text" class="form-control" id="phoneNo" formControlName="phoneNo">
+                </div>
+            </div>
+            <div class="contents_2 flex-end">
+                <div class="form-group">
+                    <label for="taxPercentage">Tax</label>
+                    <small *ngIf="formErrors.taxPercentage.message" class="form-text text-danger">{{ formErrors.taxPercentage.message }}</small>
+                    <input currencyMask
+                    formControlName="taxPercentage"
+                    class="form-control"
+                    [options]="{suffix: '%', prefix : ''}"
+                    (click)="moveCursorToEnd($event)"/>
+                </div>
+            </div>
+          </div>
+
+          <div class="flex-row">
+            <div class="contents_2">
+                <div class="form-group">
+                    <label for="unitOfMeasurement">Unit of Measurement <span class="hinttext">(required)</span></label>
+                    <small *ngIf="formErrors.unitOfMeasurement.message" class="form-text text-danger">{{ formErrors.unitOfMeasurement.message }}</small>
+                    <ng-select [searchable]="false" [clearable]="false" labelForId="unitOfMeasurement" formControlName="unitOfMeasurement">
+                      <ng-option value="km">Km</ng-option>
+                      <ng-option value="mile">Mile</ng-option>
+                    </ng-select>
+                  </div>
+            </div>
+            <div class="contents_2 flex-end">
+                <div class="form-group">
+                    <label for="currency">Currency <span class="hinttext">(required)</span></label>
+                    <small *ngIf="formErrors.currency.message" class="form-text text-danger">{{ formErrors.currency.message }}</small>
+                    <ng-select [searchable]="false" [clearable]="false" labelForId="currency" formControlName="currency">
+                      <ng-option value="USD">United States Dollars</ng-option>
+                      <ng-option value="CAD" selected="selected">Canada Dollars</ng-option>
+                    </ng-select>
+                </div>
+            </div>
+          </div>
+        </form>
+     </div>
+  </div>
+</div>
+
+
+<div class="flex-footer">
+  <div class="flex-footer-container">
+    <button type="button" (click)="exitClick()" class="btn btn-cancel-bg">Cancel</button>
+    <button type="button" class="btn btn-save" (click)="prepareFields()">Save</button>
+  </div>
+</div>
+
+<!-- </div> end of settings-billing -->
+
+<div class="modal fade" id="billing-modal" tabindex="-1" role="dialog" aria-labelledby="billing-modal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <app-stripe-test
+        *ngIf="!isLoading"
+        [STRIPE_API_KEY]="env.STRIPE_API_KEY"
+      >
+      </app-stripe-test>
+  </div>
+</div>
+
+<notifier-container></notifier-container>
+
+<ng-template #customNotification let-notificationData="notification">
+  <div class="notier-container" type="notificationData.type">
+      <span><i class="fa fa-check"></i></span>
+      <p class="notifier__notification-message">{{notificationData.message}}</p>
+      <span><img class="img-fluid close-icon" src="/assets/images/close.png" alt=""></span>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Cancel subscription</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div *ngIf="isCancellingSubscription">
+      <app-loading-anim IDENTIFIER="createBooking"></app-loading-anim>
+    </div>
+
+    <div class="modal-body changed-password-body" [ngClass]="{'disabled': isCancellingSubscription}">
+      <div class="flex-row">
+        <div class="contents_1">
+          You are about to cancel your subscription with Epilog. You won't have access to your Epilog admin. If you want to log back in, you will have to enter your credit card details and reactivate your account.
+          <br /><br />Are you sure?
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-cancel-bg" (click)="modal.close()">Cancel</button>
+        <button type="button" class="btn btn-save" (click)="cancelSubscription()">Yes, I'm sure</button>
+    </div>
+</ng-template>

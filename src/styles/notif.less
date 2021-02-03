@@ -1,0 +1,98 @@
+@color0: #ffffff;
+
+.notifier__container {
+	* {
+		box-sizing: border-box;
+	}
+}
+.notifier__container-list {
+	list-style-type: none;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-left: 0;
+}
+.notifier__notification {
+	backface-visibility: hidden;
+	display: block;
+	position: fixed;
+	visibility: hidden;
+	will-change: transform;
+	z-index: 10000;
+}
+.notifier__notification--material {
+	border-radius: 3px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	cursor: default;
+	padding-bottom: 10px;
+	padding-left: 26px;
+	padding-right: 26px;
+	padding-top: 11px;
+	.notifier__notification-message {
+		display: inline-block;
+		font-size: 15px;
+		line-height: 32px;
+		margin-bottom: 0;
+		margin-top: 0;
+		vertical-align: top;
+	}
+	.notifier__notification-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		display: inline-block;
+		height: 32px;
+		margin-left: 10px;
+		margin-right: -10px;
+		opacity: .5;
+		outline: none;
+		padding: 6px;
+		transition: opacity .2s ease;
+		vertical-align: top;
+		width: 32px;
+		&:hover {
+			opacity: 1;
+		}
+		&:focus {
+			opacity: 1;
+		}
+		&:active {
+			opacity: 1;
+			transform: scale(0.82);
+		}
+	}
+}
+.notifier__notification--default {
+	background-color: #444444;
+	color: @color0;
+	.notifier__notification-button-icon {
+		fill: @color0;
+	}
+}
+.notifier__notification--error {
+	background-color: #D9534F;
+	color: @color0;
+	.notifier__notification-button-icon {
+		fill: @color0;
+	}
+}
+.notifier__notification--info {
+	background-color: #5BC0DE;
+	color: @color0;
+	.notifier__notification-button-icon {
+		fill: @color0;
+	}
+}
+.notifier__notification--success {
+	background-color: #5CB85C;
+	color: @color0;
+	.notifier__notification-button-icon {
+		fill: @color0;
+	}
+}
+.notifier__notification--warning {
+	background-color: #F0AD4E;
+	color: @color0;
+	.notifier__notification-button-icon {
+		fill: @color0;
+	}
+}

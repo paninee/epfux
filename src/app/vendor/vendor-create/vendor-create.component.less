@@ -1,0 +1,52 @@
+@import '../../../styles/lib.less';
+
+.vendor-create {
+  margin-bottom: 2%;
+ .flex-header{
+  .flex-header();
+   .flex{
+    display:flex;
+    &:nth-child(1){
+      flex-direction: column;
+    }
+    .page-title{
+      font-size: 1.8rem;
+    }
+    .flex-title{
+      a {
+        color : @small-color;
+        &:hover{
+          color : @main-button-color;
+          text-decoration: none;
+        }
+      }
+    }
+   }
+ }
+ .flex-content{
+  .flex-content(100%);
+  .form-container{
+    .form-container(90%,3px);
+    .content-header{
+      .content-header();
+      h4{
+        .content-header-title(1.2rem,600);
+      }
+    }
+    .alert{
+      margin:2%;
+    }
+    .flex-row{
+      .side-padding(20px,20px);
+    }
+  }
+ }
+ .flex-footer{
+  .flex-header();
+  justify-content: flex-end;
+  .flex-container{
+    display:flex;
+    flex-direction: row;
+   }
+ }
+}
